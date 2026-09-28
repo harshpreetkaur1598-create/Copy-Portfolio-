@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-anton: 'Anton', sans-serif;
+    --font-bebas: 'Bebas Neue', sans-serif;
+    --font-courier: 'Courier New', 'Courier Prime', Courier, monospace;
+    --brand-red: #FF0000;
+  }
+
+  body {
+    font-family: var(--font-courier);
+    background-color: #FFFFFF;
+    color: #000000;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .heading-anton {
+    font-family: var(--font-anton);
+    letter-spacing: -0.01em;
+  }
+
+  .subheading-bebas {
+    font-family: var(--font-bebas);
+    letter-spacing: 0.05em;
+  }
+}
+
+.font-anton {
+  font-family: 'Anton', sans-serif !important;
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', sans-serif !important;
+}
+
+.font-courier {
+  font-family: 'Courier New', 'Courier Prime', Courier, monospace !important;
+}
+
+/* Marquee / Ticker animations */
+@keyframes ticker-horizontal {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker-horizontal 28s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Credit roll vertical animation */
+@keyframes credit-roll {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-credit-roll {
+  display: flex;
+  flex-direction: column;
+  animation: credit-roll 22s linear infinite;
+}
+
+.animate-credit-roll:hover {
+  animation-play-state: paused;
+}
+
+/* Custom crisp brutalist scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFFFFF;
+}
