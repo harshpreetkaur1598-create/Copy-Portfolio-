@@ -1,4 +1,4 @@
-import { HeroSlide, StatItem, ArchiveSkill, MoodboardTile, BrandLogo, CaseStudy } from '../types';
+import { HeroSlide, StatItem, ArchiveSkill, MoodboardTile, BrandLogo, CaseStudy, WorkFeedPost, WorkMediaItem } from '../types';
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
@@ -31,7 +31,7 @@ export const HERO_SLIDES: HeroSlide[] = [
 ];
 
 export const WORK_STATS: StatItem[] = [
-  { id: 'exp', value: '5', label: 'YEARS OF EXP.' },
+  { id: 'exp', value: '5+', label: 'YEARS OF EXP.' },
   { id: 'touchpoints', value: '20+', label: 'TOUCHPOINTS ACED' },
   { id: 'brands', value: '30+', label: 'BRANDS ELEVATED' },
   { id: 'campaigns', value: '50+', label: 'CAMPAIGNS CRAFTED' },
@@ -46,13 +46,17 @@ export const ARCHIVE_SKILLS: ArchiveSkill[] = [
   { id: '5', name: 'WHATSAPP BROADCAST COPY', category: 'Retention & CRM' },
   { id: '6', name: 'Q-COMM BANNERS', category: 'Quick Commerce' },
   { id: '7', name: 'INFLUENCER SCRIPTWRITING', category: 'Creator Economy' },
-  { id: '8', name: 'PDP COPY', category: 'Conversion Optimization' },
+  { id: '8', name: 'WEBSITE COPY', category: 'Digital Presence' },
   { id: '9', name: 'E-COMM STORE COLLATERALS', category: 'Brand Assets' },
   { id: '10', name: 'RETENTION E-MAILERS', category: 'CRM & Lifecycle' },
-  { id: '11', name: 'AI PROMPT ENGINEERING', category: 'Generative Campaigns' },
-  { id: '12', name: 'BRAND LEXICON & TAXONOMY', category: 'Brand Architecture' },
-  { id: '13', name: 'EVENT & FESTIVAL SCRIPTING', category: 'Experiential' },
-  { id: '14', name: 'GAMIFIED CAMPAIGN MECHANICS', category: 'Interactive Marketing' }
+  { id: '11', name: 'PERFORMANCE STRATEGY', category: 'Performance Marketing' },
+  { id: '12', name: 'CONTENT PLANS', category: 'Content Operations' },
+  { id: '13', name: 'CONTENT CALENDARS', category: 'Publishing Architecture' },
+  { id: '14', name: 'ANNUAL CONTENT STRATEGY', category: 'Brand Strategy' },
+  { id: '15', name: 'BRAND CONTENT AUDIT', category: 'Content Evaluation' },
+  { id: '16', name: 'COMPETITOR ANALYSIS', category: 'Market Intelligence' },
+  { id: '17', name: 'INSIGHT MINING', category: 'Consumer Research' },
+  { id: '18', name: 'TREND FORECASTING & TRACKING', category: 'Cultural Intelligence' }
 ];
 
 export const MOODBOARD_ITEMS: MoodboardTile[] = [
@@ -167,17 +171,34 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Scripted Ananya Panday sustenance content.',
       'Wrote copy for e-commerce assets.'
     ],
+    metricHeading: 'TOP ASSET PERFORMANCE:',
     metrics: [
-      { label: 'TOP ASSET PERFORMANCE:', value: '' },
-      { label: 'VIEWS:', value: '2.5M', isAccent: true },
-      { label: 'ER:', value: '3.89%', isAccent: true }
+      { label: 'VIEWS', value: '2.5M', isAccent: true },
+      { label: 'ER', value: '3.89%', isAccent: true }
     ],
     wireframeLayout: 'lakme',
     slots: [
-      { id: 's1', slotNumber: '01', type: 'video', dimensions: '9:16 REEL', hint: 'ANANYA PANDAY SUSTENANCE FILM' },
-      { id: 's2', slotNumber: '02', type: 'visual', dimensions: '1:1 STATIC', hint: 'AI GEN-ASSET HERO VISUAL' },
-      { id: 's3', slotNumber: '03', type: 'visual', dimensions: '1:1 STATIC', hint: 'PRODUCT RENEWAL CAROUSEL' },
-      { id: 's4', slotNumber: '04', type: 'banner', dimensions: '16:9 BANNER', hint: 'E-COMMERCE HERO BANNER' }
+      {
+        id: 'lakme-reel-1',
+        slotNumber: '01',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'ANANYA PANDAY SUSTENANCE FILM'
+      },
+      {
+        id: 'lakme-reel-2',
+        slotNumber: '02',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'EVOLUT[AI]ON GEN-ASSET REVEAL'
+      },
+      {
+        id: 'lakme-reel-3',
+        slotNumber: '03',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'SERUM ACTIVE FORMULA'
+      }
     ]
   },
   {
@@ -186,13 +207,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: 'OFF-SEASON TRADE TRACTION',
     description: 'Turned an off-season slump into a revenue spike by trading generic sale callouts for gamified real-time storytelling.',
     bullets: [
-      'Crafted gamified live concept.',
+      'Conceptualised live gamification through Instagram stories.',
       'Designed interactive engagement mechanics.',
       'Wrote social, D2C copy.'
     ],
     metrics: [
-      { label: 'SALES LIFT:', value: '+85%', isAccent: true },
-      { label: 'ENGAGEMENT:', value: '200+ DMS', isAccent: true }
+      { label: 'SALES LIFT', value: '+85%', isAccent: true },
+      { label: 'ENGAGEMENT', value: '200+ DMS', isAccent: true }
     ],
     wireframeLayout: 'mac-promo',
     slots: [
@@ -213,8 +234,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Executed live on-ground festival coverage.'
     ],
     metrics: [
-      { label: 'ASSETS DEPLOYED:', value: '70+', isAccent: true },
-      { label: 'CREATOR COLLABS:', value: '15+', isAccent: true }
+      { label: 'ASSETS DEPLOYED', value: '70+', isAccent: true },
+      { label: 'CREATOR COLLABS', value: '15+', isAccent: true }
     ],
     wireframeLayout: 'cornetto',
     slots: [
@@ -238,7 +259,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Led the content team.'
     ],
     metrics: [
-      { label: 'ASSETS DEPLOYED OVER A 2HR RUNTIME:', value: '15+', isAccent: true }
+      { label: '', value: '15+ Assets deployed over 2hr Event Runtime', isAccent: true }
     ],
     wireframeLayout: 'novology',
     slots: [
@@ -259,15 +280,33 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Designed integrated launch plan.',
       'Unified visual films to product.'
     ],
-    metrics: [
-      { label: 'ECOSYSTEM CHANNELS:', value: 'SOCIAL + E-COMM', isAccent: true },
-      { label: 'GLOBAL RETENTION:', value: 'PERMANENT ENGINE', isAccent: true }
-    ],
+    metrics: [],
     wireframeLayout: 'mac-threads',
     slots: [
-      { id: 's1', slotNumber: '01', type: 'reel', dimensions: '9:16 COLUMN', hint: 'SHADE LEXICON HERO FILM 01' },
-      { id: 's2', slotNumber: '02', type: 'reel', dimensions: '9:16 COLUMN', hint: 'FESTIVE CULTURAL ANCHOR FILM 02' },
-      { id: 's3', slotNumber: '03', type: 'reel', dimensions: '9:16 COLUMN', hint: 'E-COMMERCE UNIFIED CONVERSION 03' }
+      {
+        id: 's1',
+        slotNumber: '01',
+        type: 'image',
+        dimensions: '9:16 COLUMN',
+        hint: 'M·A·C DIWALI EDIT 01',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853820/MAC_Diwali_Edit_2.png'
+      },
+      {
+        id: 's2',
+        slotNumber: '02',
+        type: 'image',
+        dimensions: '9:16 COLUMN',
+        hint: 'M·A·C DIWALI EDIT 02',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/Mac_Diwali_Edit_1.png'
+      },
+      {
+        id: 's3',
+        slotNumber: '03',
+        type: 'image',
+        dimensions: '9:16 COLUMN',
+        hint: 'M·A·C DIWALI EDIT 03',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/MAC_Diwali_Edit_3.png'
+      }
     ]
   }
 ];
@@ -346,3 +385,220 @@ export const WORK_ARCHIVE_DUMP = [
     snippet: '"Security isn’t a PDF you lock in a drawer. It’s knowing tomorrow’s hospital bill won’t disrupt next year’s college fees."'
   }
 ];
+
+export const WORK_FEED_POSTS: WorkFeedPost[] = [
+  {
+    id: 'lakme-launch',
+    brandId: 'lakme',
+    brandName: 'LAKMĒ',
+    brandLogoText: 'LAKMĒ',
+    brandCategory: 'LAUNCH CAMPAIGN',
+    campaignTitle: 'AHEAD OF THE EVOLUT[AI]ON',
+    description: 'Before brands trusted AI for BAU, I mastered nascent generative tools in mid-2024 and brought larger-than-life concepts to social feeds. From prompt engineering for launch assets to scripting Ananya Panday sustenance films and e-commerce copy.',
+    items: [
+      {
+        id: 'lakme-feed-1',
+        type: 'wireframe',
+        title: 'Ananya Panday Sustenance Film',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Short-form celebrity hook with fast-cut transitions & voiceover rhythm.'
+      },
+      {
+        id: 'lakme-feed-2',
+        type: 'wireframe',
+        title: 'Evolut[AI]on Gen-Asset Reveal',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'AI-generated futuristic concept bringing larger-than-life visuals to feed.'
+      },
+      {
+        id: 'lakme-feed-3',
+        type: 'wireframe',
+        title: 'Serum Active Storytelling',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Clinical yet conversational product storytelling for high-intent skincare shoppers.'
+      }
+    ]
+  },
+  {
+    id: 'mac-promo',
+    brandId: 'mac',
+    brandName: 'M·A·C COSMETICS',
+    brandLogoText: 'M·A·C',
+    brandCategory: 'PROMO / DIRECT RESPONSE',
+    campaignTitle: 'OFF-SEASON TRADE TRACTION',
+    description: 'Turned an off-season slump into a revenue spike by trading generic sale callouts for gamified real-time storytelling. Conceptualized live gamification through Instagram stories, designed interactive engagement mechanics, and wrote social, D2C copy.',
+    items: [
+      {
+        id: 'mac-item-1',
+        type: 'wireframe',
+        title: 'Interactive Live Teaser',
+        dimensionsLabel: '9:16 VERTICAL',
+        aspectRatio: '9:16',
+        caption: 'Gamified story quiz hook directing users straight to direct messages.'
+      },
+      {
+        id: 'mac-item-2',
+        type: 'wireframe',
+        title: 'Gamified DM Dispatch Reel',
+        dimensionsLabel: '9:16 VERTICAL',
+        aspectRatio: '9:16',
+        caption: 'Instant response chatbot automated funnel with bespoke promo codes.'
+      },
+      {
+        id: 'mac-item-3',
+        type: 'wireframe',
+        title: 'Off-Season Revenue Conversion Cut',
+        dimensionsLabel: '9:16 VERTICAL',
+        aspectRatio: '9:16',
+        caption: 'High-velocity retention reel showcasing top beauty bestsellers.'
+      }
+    ]
+  },
+  {
+    id: 'cornetto-zomaland',
+    brandId: 'cornetto',
+    brandName: 'CORNETTO',
+    brandLogoText: 'CORNETTO',
+    brandCategory: 'EXPERIENTIAL / BRANDING',
+    campaignTitle: 'MAKING OF A MASCOT (CORNETTO X ZOMALAND)',
+    description: 'How do you make a newcomer stand out among OG icons? Not with flavor notes, but with character personality. Defined campaign positioning, curated Zomaland multi-city content strategy, directed creator content formats, and executed live on-ground festival coverage.',
+    items: [
+      {
+        id: 'cornetto-item-1',
+        type: 'wireframe',
+        title: 'Mascot Reveal Anthem',
+        dimensionsLabel: '3:4 POSTER',
+        aspectRatio: '4:5',
+        caption: 'High-energy character intro establishing the quirky festival mascot.'
+      },
+      {
+        id: 'cornetto-item-2',
+        type: 'wireframe',
+        title: 'Festival On-Ground Banners',
+        dimensionsLabel: '1:1 GRID',
+        aspectRatio: '1:1',
+        caption: 'Experiential signage driving footfall to the Zomaland chill lounge.'
+      },
+      {
+        id: 'cornetto-item-3',
+        type: 'wireframe',
+        title: 'Creator TikTok / Reel Hooks',
+        dimensionsLabel: '1:1 GRID',
+        aspectRatio: '1:1',
+        caption: 'Bite-sized viral creator challenge scripts executed live at the festival.'
+      },
+      {
+        id: 'cornetto-item-4',
+        type: 'wireframe',
+        title: 'Festival Aftermovie Narrative',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Recap film highlighting the multi-city tour and community fan moments.'
+      }
+    ]
+  },
+  {
+    id: 'novology-desire',
+    brandId: 'novology',
+    brandName: 'NOVOLOGY',
+    brandLogoText: 'NOVOLOGY',
+    brandCategory: 'MARKET ENTRY',
+    campaignTitle: 'DESIRE SYNTHESIS',
+    description: 'Strong narratives can be built on minimal budgets and tight timelines too. Leveraging the creator economy turned scarcity into hype. Crafted campaign positioning, shaped content strategy, directed live event coverage, and led the content team.',
+    items: [
+      {
+        id: 'novo-item-1',
+        type: 'wireframe',
+        title: 'Derma Science Clinical Breakdown',
+        dimensionsLabel: '4:5 CLINICAL',
+        aspectRatio: '4:5',
+        caption: 'Co-created dermatological evidence post validating acne solution claims.'
+      },
+      {
+        id: 'novo-item-2',
+        type: 'wireframe',
+        title: 'Mini Serum Quick-Comm Hook',
+        dimensionsLabel: '1:1 GRID',
+        aspectRatio: '1:1',
+        caption: 'High-retention product launch clip tailored for 10-minute delivery apps.'
+      },
+      {
+        id: 'novo-item-3',
+        type: 'wireframe',
+        title: 'Live Creator Runtime Harvest',
+        dimensionsLabel: '9:16 TALL',
+        aspectRatio: '9:16',
+        caption: 'Over 15+ live assets deployed across a continuous 2-hour event runtime.'
+      }
+    ]
+  },
+  {
+    id: 'mac-threads',
+    brandId: 'mac',
+    brandName: 'M·A·C COSMETICS',
+    brandLogoText: 'M·A·C',
+    brandCategory: 'HERO MOMENT',
+    campaignTitle: 'NARRATIVE THREADS',
+    description: 'Product, campaigns, and culture are tied together with words that define the narrative. Faced with disconnected festive films, I created an enduring naming taxonomy that moved from local launch to the permanent global brand engine.',
+    items: [
+      {
+        id: 'mac-thread-1',
+        type: 'image',
+        title: 'M·A·C Diwali Edit 01',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853820/MAC_Diwali_Edit_2.png',
+        dimensionsLabel: '9:16 COLUMN',
+        aspectRatio: '9:16',
+        caption: 'Festive edit featuring iconic M·A·C shades and celebratory palette.'
+      },
+      {
+        id: 'mac-thread-2',
+        type: 'image',
+        title: 'M·A·C Diwali Edit 02',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/Mac_Diwali_Edit_1.png',
+        dimensionsLabel: '9:16 COLUMN',
+        aspectRatio: '9:16',
+        caption: 'Shade taxonomy showcase tying product to festive culture.'
+      },
+      {
+        id: 'mac-thread-3',
+        type: 'image',
+        title: 'M·A·C Diwali Edit 03',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/MAC_Diwali_Edit_3.png',
+        dimensionsLabel: '9:16 COLUMN',
+        aspectRatio: '9:16',
+        caption: 'Festive beauty edit and e-commerce conversion campaign static.'
+      }
+    ]
+  },
+  {
+    id: 'clinique-retention',
+    brandId: 'clinique',
+    brandName: 'CLINIQUE',
+    brandLogoText: 'CLINIQUE',
+    brandCategory: 'RETENTION COPY',
+    campaignTitle: 'YOU TOOK THE DAY OFF 365 TIMES — MOISTURE SURGE',
+    description: '100 hours of dewy resilience. Even after washing your face. Automated lifecycle email copy and D2C product storytelling built for long-term customer retention and habit formation.',
+    items: [
+      {
+        id: 'clinique-item-1',
+        type: 'wireframe',
+        title: 'Moisture Surge 100H Hero Static',
+        dimensionsLabel: '1:1 PACKAGING',
+        aspectRatio: '1:1',
+        caption: 'Clinical hydra-sensor visual demonstrating 100-hour moisture retention.'
+      },
+      {
+        id: 'clinique-item-2',
+        type: 'wireframe',
+        title: 'Automated Lifecycle Email Flow',
+        dimensionsLabel: '4:5 EDITORIAL',
+        aspectRatio: '4:5',
+        caption: '38% Open Rate emailer: "Did your skin just take a deep breath?"'
+      }
+    ]
+  }
+];
+

@@ -47,7 +47,7 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
               {/* Animated rolling list in Courier New font, pure text only */}
               <div
                 className="flex flex-col space-y-2.5 sm:space-y-3.5 md:space-y-4 animate-credit-roll pointer-events-none select-none"
-                style={{ animationDuration: '28s' }}
+                style={{ animationDuration: '34s' }}
               >
                 {/* First cycle - text only */}
                 {ARCHIVE_SKILLS.map((skill) => (

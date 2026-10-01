@@ -45,7 +45,7 @@ export const StatsBar: React.FC<StatsBarProps> = ({ currentSlide = 0, onSelectSl
           // Calculate animated value from 0 up to target simultaneously
           let displayValue: React.ReactNode = stat.value;
           if (stat.id === 'exp') {
-            displayValue = Math.round(5 * progress);
+            displayValue = `${Math.round(5 * progress)}+`;
           } else if (stat.id === 'touchpoints') {
             displayValue = `${Math.round(20 * progress)}+`;
           } else if (stat.id === 'brands') {

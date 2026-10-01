@@ -272,11 +272,16 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
         <div
           className="w-full md:w-auto md:absolute md:left-1/2 md:bottom-0 flex justify-center items-end z-20 overflow-visible"
           style={{
-            transform: `translate3d(calc(-50% + ${mousePos.x * 10}px), ${mousePos.y * 6}px, 0)`,
+            transform: `translate3d(calc(-50% + ${mousePos.x * 12}px), ${mousePos.y * 6}px, 0)`,
             transition: mousePos.x === 0 ? 'transform 0.5s ease-out' : 'transform 0.1s ease-out'
           }}
         >
-          <HeroPortrait slideIndex={displaySlide} />
+          <HeroPortrait
+            slideIndex={displaySlide}
+            slidePhase={slidePhase}
+            slideDirection={slideDirection}
+            onNext={handleNextSlide}
+          />
         </div>
 
         {/* 3. Right: Subcopy with Typewriter animation & EXPLORE WORK CTA Button with visible swipe transition */}

@@ -11,24 +11,70 @@ import { ArchiveSection } from './components/ArchiveSection';
 import { BrandTicker } from './components/BrandTicker';
 import { ProjectsCarousel } from './components/ProjectsCarousel';
 import { ContactSection } from './components/ContactSection';
-import { WorkModal } from './components/WorkModal';
+import { WorkPage } from './components/WorkPage';
 
 export default function App() {
-  const [isWorkModalOpen, setIsWorkModalOpen] = useState(false);
+  const [currentView, setCurrentView] = useState<'home' | 'work'>('home');
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
 
-  const handleScrollToContact = () => {
-    const contactElem = document.getElementById('contact-section');
-    if (contactElem) {
-      contactElem.scrollIntoView({ behavior: 'smooth' });
+  const navigateToWork = () => {
+    setCurrentView('work');
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
     }
   };
+
+  const navigateToHome = () => {
+    setCurrentView('home');
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const handleScrollToContact = () => {
+    if (currentView === 'work') {
+      setCurrentView('home');
+      setTimeout(() => {
+        try {
+          const contactElem = document.getElementById('contact-section');
+          if (contactElem) {
+            contactElem.scrollIntoView({ behavior: 'smooth' });
+          }
+        } catch {
+          // fallback
+        }
+      }, 100);
+      return;
+    }
+
+    try {
+      const contactElem = document.getElementById('contact-section');
+      if (contactElem) {
+        contactElem.scrollIntoView({ behavior: 'smooth' });
+      }
+    } catch {
+      // fallback
+    }
+  };
+
+  if (currentView === 'work') {
+    return (
+      <WorkPage
+        onNavigateHome={navigateToHome}
+        onNavigateContact={handleScrollToContact}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white text-black font-courier selection:bg-[#FF0000] selection:text-white flex flex-col">
       {/* 1. Top Static Navigation Bar */}
       <Header
-        onOpenWork={() => setIsWorkModalOpen(true)}
+        onOpenWork={navigateToWork}
         onScrollToContact={handleScrollToContact}
       />
 
@@ -37,7 +83,7 @@ export default function App() {
         <HeroCarousel
           currentSlide={currentHeroSlide}
           onSlideChange={setCurrentHeroSlide}
-          onExploreWork={() => setIsWorkModalOpen(true)}
+          onExploreWork={navigateToWork}
         />
 
         {/* 3. Static Stats Bar with Transparent Black Background */}
@@ -47,23 +93,17 @@ export default function App() {
         />
 
         {/* 4. Archive Section: Rolling Credits List + Dynamic Moodboard Grid (Page 4) */}
-        <ArchiveSection onOpenWork={() => setIsWorkModalOpen(true)} />
+        <ArchiveSection onOpenWork={navigateToWork} />
 
         {/* 5. Ticker Tape of All Brand Logos (Pages 5, 6, 7, 8) */}
         <BrandTicker />
 
         {/* 6. Projects Section: 5 Case Studies Carousel with Media Wireframes (Pages 9, 10, 11, 12, 13) */}
-        <ProjectsCarousel onOpenWork={() => setIsWorkModalOpen(true)} />
+        <ProjectsCarousel onOpenWork={navigateToWork} />
 
         {/* 7. Brutalist Contact & Commission Footer Section */}
         <ContactSection />
       </main>
-
-      {/* Connected Work Dump & Media Binding Vault */}
-      <WorkModal
-        isOpen={isWorkModalOpen}
-        onClose={() => setIsWorkModalOpen(false)}
-      />
     </div>
   );
 }

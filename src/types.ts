@@ -45,9 +45,11 @@ export interface BrandLogo {
 export interface WireframeSlot {
   id: string;
   slotNumber: string;
-  type: 'video' | 'visual' | 'reel' | 'ad_asset' | 'banner';
+  type: 'video' | 'visual' | 'reel' | 'ad_asset' | 'banner' | 'image';
   dimensions: string;
   hint: string;
+  url?: string;
+  mediaType?: 'youtube' | 'instagram' | 'drive' | 'image' | 'video';
 }
 
 export interface CaseStudy {
@@ -56,6 +58,7 @@ export interface CaseStudy {
   title: string; // e.g. "AHEAD OF THE EVOLUT[AI]ON"
   description: string;
   bullets: string[];
+  metricHeading?: string;
   metrics: {
     label: string;
     value: string;
@@ -63,4 +66,26 @@ export interface CaseStudy {
   }[];
   wireframeLayout: 'lakme' | 'mac-promo' | 'cornetto' | 'novology' | 'mac-threads';
   slots: WireframeSlot[];
+}
+
+export interface WorkMediaItem {
+  id: string;
+  type: 'image' | 'video' | 'youtube' | 'instagram' | 'drive' | 'wireframe';
+  title?: string;
+  url?: string;
+  thumbnailUrl?: string;
+  aspectRatio?: '1:1' | '4:5' | '9:16' | '16:9';
+  dimensionsLabel?: string;
+  caption?: string;
+}
+
+export interface WorkFeedPost {
+  id: string;
+  brandId: string;
+  brandName: string;
+  brandLogoText?: string;
+  brandCategory?: string;
+  campaignTitle: string;
+  description: string;
+  items: WorkMediaItem[];
 }

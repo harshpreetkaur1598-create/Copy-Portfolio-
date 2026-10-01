@@ -58,6 +58,20 @@
   animation-play-state: paused;
 }
 
+/* Subtle organic floating animation for Hero Portrait */
+@keyframes hero-portrait-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-portrait-float {
+  animation: hero-portrait-float 5.5s ease-in-out infinite;
+}
+
 /* Credit roll vertical animation */
 @keyframes credit-roll {
   0% {
