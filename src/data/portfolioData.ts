@@ -1,4 +1,4 @@
-import { HeroSlide, StatItem, ArchiveSkill, MoodboardTile, BrandLogo, CaseStudy, WorkFeedPost, WorkMediaItem } from '../types';
+import { HeroSlide, StatItem, ArchiveSkill, MoodboardTile, BrandLogo, CaseStudy, WorkFeedPost, WorkMediaItem, ArchiveGalleryItem } from '../types';
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
@@ -179,25 +179,92 @@ export const CASE_STUDIES: CaseStudy[] = [
     wireframeLayout: 'lakme',
     slots: [
       {
-        id: 'lakme-reel-1',
+        id: 'lakme-ananya-1',
         slotNumber: '01',
         type: 'reel',
         dimensions: '9:16 REEL',
-        hint: 'ANANYA PANDAY SUSTENANCE FILM'
+        hint: 'ANANYA PANDAY SUSTENANCE FILM 01 (SCRIPTED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ananya_Video_1.mp4'
       },
       {
-        id: 'lakme-reel-2',
+        id: 'lakme-ananya-2',
         slotNumber: '02',
         type: 'reel',
         dimensions: '9:16 REEL',
-        hint: 'EVOLUT[AI]ON GEN-ASSET REVEAL'
+        hint: 'ANANYA PANDAY SUSTENANCE FILM 02 (SCRIPTED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ananya_Panday_2.mp4'
       },
       {
-        id: 'lakme-reel-3',
+        id: 'lakme-ananya-3',
         slotNumber: '03',
         type: 'reel',
         dimensions: '9:16 REEL',
-        hint: 'SERUM ACTIVE FORMULA'
+        hint: 'ANANYA PANDAY SUSTENANCE FILM 03 (SCRIPTED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ananya_Panday_3.mp4'
+      },
+      {
+        id: 'lakme-ai-1',
+        slotNumber: '04',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'AI PRE-BUZZ VISUAL 01 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Pre_Buzz_2.mp4'
+      },
+      {
+        id: 'lakme-ai-2',
+        slotNumber: '05',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'AI PRE-BUZZ VISUAL 02 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ai_Pre_Buzz_1.mp4'
+      },
+      {
+        id: 'lakme-ai-3',
+        slotNumber: '06',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'AI PRE-BUZZ VISUAL 03 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_bloom_pre_buzz_4.mp4'
+      },
+      {
+        id: 'lakme-ai-4',
+        slotNumber: '07',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'AI PRE-BUZZ VISUAL 04 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Pre_Buzz_3.mp4'
+      },
+      {
+        id: 'lakme-glaze-1',
+        slotNumber: '08',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'LAKMÉ LIP GLAZE AI VISUAL 01 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lakme_Lip_Glaze_AI_video_1.mp4'
+      },
+      {
+        id: 'lakme-glaze-2',
+        slotNumber: '09',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'LAKMÉ LIP GLAZE AI VISUAL 02 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lip_Glaze_AI_2.mp4'
+      },
+      {
+        id: 'lakme-glaze-3',
+        slotNumber: '10',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'LAKMÉ LIP GLAZE AI VISUAL 03 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lip_Glaze_AI_3.mp4'
+      },
+      {
+        id: 'lakme-glaze-4',
+        slotNumber: '11',
+        type: 'video',
+        dimensions: 'AI GEN-ASSET',
+        hint: 'LAKMÉ LIP GLAZE AI VISUAL 04 (PROMPT ENGINEERED)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lip_Glaze_4.mp4'
       }
     ]
   },
@@ -217,9 +284,38 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     wireframeLayout: 'mac-promo',
     slots: [
-      { id: 's1', slotNumber: '01', type: 'reel', dimensions: '9:16 VERTICAL', hint: 'INTERACTIVE LIVE TEASER' },
-      { id: 's2', slotNumber: '02', type: 'reel', dimensions: '9:16 VERTICAL', hint: 'GAMIFIED DM DISPATCH REEL' },
-      { id: 's3', slotNumber: '03', type: 'reel', dimensions: '9:16 VERTICAL', hint: 'OFF-SEASON REVENUE CONVERSION' }
+      {
+        id: 'mac-case-study-video',
+        slotNumber: '01',
+        type: 'reel',
+        dimensions: '9:16 VERTICAL',
+        hint: 'M·A·C STOCK MARKET CASE STUDY FILM (SCRIPTED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/MAC_Stock_Market_Case_Study.mp4'
+      },
+      {
+        id: 'mac-screen-1',
+        slotNumber: '02',
+        type: 'image',
+        dimensions: '9:16 VERTICAL',
+        hint: 'M·A·C STOCK MARKET: INTERACTIVE LIVE GAMIFICATION (DESIGNED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/MAC_Stock_Market_1.png'
+      },
+      {
+        id: 'mac-screen-2',
+        slotNumber: '03',
+        type: 'image',
+        dimensions: '9:16 VERTICAL',
+        hint: 'M·A·C STOCK MARKET: INTERACTIVE LIVE GAMIFICATION (DESIGNED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/MAC_Stock_Market_2.png'
+      },
+      {
+        id: 'mac-screen-3',
+        slotNumber: '04',
+        type: 'image',
+        dimensions: '9:16 VERTICAL',
+        hint: 'M·A·C STOCK MARKET: INTERACTIVE LIVE GAMIFICATION (DESIGNED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853820/MAC_Stock_Market_3.png'
+      }
     ]
   },
   {
@@ -239,12 +335,54 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     wireframeLayout: 'cornetto',
     slots: [
-      { id: 's1', slotNumber: '01', type: 'video', dimensions: '3:4 POSTER', hint: 'MASCOT REVEAL ANTHEM' },
-      { id: 's2', slotNumber: '02', type: 'ad_asset', dimensions: '1:1 GRID', hint: 'FESTIVAL ON-GROUND BANNERS' },
-      { id: 's3', slotNumber: '03', type: 'ad_asset', dimensions: '1:1 GRID', hint: 'CREATOR TIKTOK / REEL HOOKS' },
-      { id: 's4', slotNumber: '04', type: 'ad_asset', dimensions: '1:1 GRID', hint: 'ZOMALAND BOOTH SCRIPTS' },
-      { id: 's5', slotNumber: '05', type: 'ad_asset', dimensions: '1:1 GRID', hint: 'MEME & VIRAL COPIES' },
-      { id: 's6', slotNumber: '06', type: 'video', dimensions: '9:16 REEL', hint: 'FESTIVAL AFTERMOVIE NARRATIVE' }
+      {
+        id: 'cornetto-carousel-1',
+        slotNumber: '01',
+        type: 'image',
+        dimensions: '4:5 CAROUSEL',
+        hint: 'CORNETTO MASCOT AUDITION ANNOUNCEMENT CAROUSEL',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Cornetto_flavour_launch_2.png'
+      },
+      {
+        id: 'cornetto-character-reveal',
+        slotNumber: '02',
+        type: 'image',
+        dimensions: '4:5 POST',
+        hint: 'CORNETTO OFFICIAL MASCOT CHARACTER ANNOUNCEMENT',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730670/Cornetto_flavour_launch.png'
+      },
+      {
+        id: 'cornetto-event-merch',
+        slotNumber: '03',
+        type: 'image',
+        dimensions: '4:5 POST',
+        hint: 'CORNETTO ZOMALAND EVENT MERCHANDISE',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730668/Cornetto_Flavour_launch_3.png'
+      },
+      {
+        id: 'cornetto-video-1',
+        slotNumber: '04',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'CORNETTO CREATOR COLLAB REEL 01 (CONCEPTUALISED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_flavour_launch_4.mp4'
+      },
+      {
+        id: 'cornetto-video-2',
+        slotNumber: '05',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'CORNETTO CREATOR COLLAB REEL 02 (CONCEPTUALISED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_Flavour_launch_5.mp4'
+      },
+      {
+        id: 'cornetto-video-3',
+        slotNumber: '06',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'CORNETTO × ZOMALAND FESTIVAL ANTHEM (CONCEPTUALISED BY HARSHPREET)',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_xzomaland.mp4'
+      }
     ]
   },
   {
@@ -263,11 +401,46 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     wireframeLayout: 'novology',
     slots: [
-      { id: 's1', slotNumber: '01', type: 'visual', dimensions: '4:5 CLINICAL', hint: 'DERMA SCIENCE CLINICAL BREAKDOWN' },
-      { id: 's2', slotNumber: '02', type: 'reel', dimensions: '1:1 GRID', hint: 'MINI SERUM QUICK-COMM HOOK' },
-      { id: 's3', slotNumber: '03', type: 'reel', dimensions: '1:1 GRID', hint: 'DERMATOLOGIST CO-CREATION CLIP' },
-      { id: 's4', slotNumber: '04', type: 'banner', dimensions: '16:9 BANNER', hint: 'SCARCITY LAUNCH MICROSITE ASSET' },
-      { id: 's5', slotNumber: '05', type: 'video', dimensions: '9:16 TALL', hint: 'LIVE CREATOR RUNTIME HARVEST' }
+      {
+        id: 'novo-video-invite',
+        slotNumber: '01',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'NOVOLOGY PERSONALISED CODED INVITATION',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Novo_launch_3.mp4'
+      },
+      {
+        id: 'novo-video-prkit',
+        slotNumber: '02',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'NOVOLOGY INFLUENCER PR KIT UNBOXING',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Novo_launch_2.mp4'
+      },
+      {
+        id: 'novo-video-event-1',
+        slotNumber: '03',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'NOVOLOGY ON-GROUND LAUNCH EVENT COVERAGE',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Novo_launch_1.mp4'
+      },
+      {
+        id: 'novo-video-redflags',
+        slotNumber: '04',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'NOVOLOGY SKINCARE RED FLAGS CREATOR BYTE',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Novology_Skincare_Red_Flags.mp4'
+      },
+      {
+        id: 'novo-video-event-3',
+        slotNumber: '05',
+        type: 'reel',
+        dimensions: '9:16 REEL',
+        hint: 'NOVOLOGY EVENT SHOWCASE & AMBIENCE',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Novology_Event_video_3.mp4'
+      }
     ]
   },
   {
@@ -289,15 +462,15 @@ export const CASE_STUDIES: CaseStudy[] = [
         type: 'image',
         dimensions: '9:16 COLUMN',
         hint: 'M·A·C DIWALI EDIT 01',
-        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853820/MAC_Diwali_Edit_2.png'
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/Mac_Diwali_Edit_1.png'
       },
       {
         id: 's2',
         slotNumber: '02',
         type: 'image',
         dimensions: '9:16 COLUMN',
-        hint: 'M·A·C DIWALI EDIT 02',
-        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/Mac_Diwali_Edit_1.png'
+        hint: 'M·A·C DIWALI EDIT 02: ORNATE OPULENCE',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853820/MAC_Diwali_Edit_2.png'
       },
       {
         id: 's3',
@@ -397,28 +570,103 @@ export const WORK_FEED_POSTS: WorkFeedPost[] = [
     description: 'Before brands trusted AI for BAU, I mastered nascent generative tools in mid-2024 and brought larger-than-life concepts to social feeds. From prompt engineering for launch assets to scripting Ananya Panday sustenance films and e-commerce copy.',
     items: [
       {
-        id: 'lakme-feed-1',
-        type: 'wireframe',
-        title: 'Ananya Panday Sustenance Film',
+        id: 'lakme-ananya-reel-1',
+        type: 'video',
+        title: 'Ananya Panday Sustenance Film 01',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ananya_Video_1.mp4',
         dimensionsLabel: '9:16 REEL',
         aspectRatio: '9:16',
-        caption: 'Short-form celebrity hook with fast-cut transitions & voiceover rhythm.'
+        caption: 'Celebrity sustenance film scripted by Harshpreet Kaur. Celebrity hook with fast-cut transitions & voiceover rhythm.'
       },
       {
-        id: 'lakme-feed-2',
-        type: 'wireframe',
-        title: 'Evolut[AI]on Gen-Asset Reveal',
+        id: 'lakme-ananya-reel-2',
+        type: 'video',
+        title: 'Ananya Panday Sustenance Film 02',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ananya_Panday_2.mp4',
         dimensionsLabel: '9:16 REEL',
         aspectRatio: '9:16',
-        caption: 'AI-generated futuristic concept bringing larger-than-life visuals to feed.'
+        caption: 'High-energy launch film scripted by Harshpreet Kaur featuring brand ambassador Ananya Panday.'
       },
       {
-        id: 'lakme-feed-3',
-        type: 'wireframe',
-        title: 'Serum Active Storytelling',
+        id: 'lakme-ananya-reel-3',
+        type: 'video',
+        title: 'Ananya Panday Sustenance Film 03',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ananya_Panday_3.mp4',
         dimensionsLabel: '9:16 REEL',
         aspectRatio: '9:16',
-        caption: 'Clinical yet conversational product storytelling for high-intent skincare shoppers.'
+        caption: 'Campaign finale cut scripted by Harshpreet Kaur driving high-intent retail conversion.'
+      },
+      {
+        id: 'lakme-ai-visual-1',
+        type: 'video',
+        title: 'AI Pre-Buzz Visual 01',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Pre_Buzz_2.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur in mid-2024. Futuristic AI aesthetic before AI became BAU.'
+      },
+      {
+        id: 'lakme-ai-visual-2',
+        type: 'video',
+        title: 'AI Pre-Buzz Visual 02',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Ai_Pre_Buzz_1.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. Ethereal product manifestation and surreal bloom dynamics.'
+      },
+      {
+        id: 'lakme-ai-visual-3',
+        type: 'video',
+        title: 'AI Pre-Buzz Visual 03',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_bloom_pre_buzz_4.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. Petal-infused texture unveil & color grading.'
+      },
+      {
+        id: 'lakme-ai-visual-4',
+        type: 'video',
+        title: 'AI Pre-Buzz Visual 04',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Rouge_Bloom_Pre_Buzz_3.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. High-impact visual climax for campaign pre-buzz teaser phase.'
+      },
+      {
+        id: 'lakme-glaze-visual-1',
+        type: 'video',
+        title: 'Lakmé Lip Glaze AI Visual 01',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lakme_Lip_Glaze_AI_video_1.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. High-shine molten formula aesthetics for Lakmé Lip Glaze.'
+      },
+      {
+        id: 'lakme-glaze-visual-2',
+        type: 'video',
+        title: 'Lakmé Lip Glaze AI Visual 02',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lip_Glaze_AI_2.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. Macro pigment droplet explosion and light refraction.'
+      },
+      {
+        id: 'lakme-glaze-visual-3',
+        type: 'video',
+        title: 'Lakmé Lip Glaze AI Visual 03',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lip_Glaze_AI_3.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. Glossy texture reveal & cinematic fluid physics.'
+      },
+      {
+        id: 'lakme-glaze-visual-4',
+        type: 'video',
+        title: 'Lakmé Lip Glaze AI Visual 04',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lip_Glaze_4.mp4',
+        dimensionsLabel: 'AI VISUAL',
+        aspectRatio: '9:16',
+        caption: 'Prompt engineered by Harshpreet Kaur. Lip Glaze packaging and color saturation showcase.'
       }
     ]
   },
@@ -432,28 +680,40 @@ export const WORK_FEED_POSTS: WorkFeedPost[] = [
     description: 'Turned an off-season slump into a revenue spike by trading generic sale callouts for gamified real-time storytelling. Conceptualized live gamification through Instagram stories, designed interactive engagement mechanics, and wrote social, D2C copy.',
     items: [
       {
-        id: 'mac-item-1',
-        type: 'wireframe',
-        title: 'Interactive Live Teaser',
+        id: 'mac-feed-video-1',
+        type: 'video',
+        title: 'M·A·C Stock Market Case Study Film',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/MAC_Stock_Market_Case_Study.mp4',
         dimensionsLabel: '9:16 VERTICAL',
         aspectRatio: '9:16',
-        caption: 'Gamified story quiz hook directing users straight to direct messages.'
+        caption: 'Complete case study film scripted by Harshpreet Kaur. Detailing the gamified real-time storytelling strategy that drove +85% sales lift.'
       },
       {
-        id: 'mac-item-2',
-        type: 'wireframe',
-        title: 'Gamified DM Dispatch Reel',
+        id: 'mac-feed-screen-1',
+        type: 'image',
+        title: 'Interactive Live Gamification',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/MAC_Stock_Market_1.png',
         dimensionsLabel: '9:16 VERTICAL',
         aspectRatio: '9:16',
-        caption: 'Instant response chatbot automated funnel with bespoke promo codes.'
+        caption: 'Interactive live gamification campaign designed by Harshpreet Kaur for M·A·C Cosmetics.'
       },
       {
-        id: 'mac-item-3',
-        type: 'wireframe',
-        title: 'Off-Season Revenue Conversion Cut',
+        id: 'mac-feed-screen-2',
+        type: 'image',
+        title: 'Interactive Live Gamification',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853819/MAC_Stock_Market_2.png',
         dimensionsLabel: '9:16 VERTICAL',
         aspectRatio: '9:16',
-        caption: 'High-velocity retention reel showcasing top beauty bestsellers.'
+        caption: 'Interactive live gamification campaign designed by Harshpreet Kaur for M·A·C Cosmetics.'
+      },
+      {
+        id: 'mac-feed-screen-3',
+        type: 'image',
+        title: 'Interactive Live Gamification',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790853820/MAC_Stock_Market_3.png',
+        dimensionsLabel: '9:16 VERTICAL',
+        aspectRatio: '9:16',
+        caption: 'Interactive live gamification campaign designed by Harshpreet Kaur for M·A·C Cosmetics.'
       }
     ]
   },
@@ -467,36 +727,85 @@ export const WORK_FEED_POSTS: WorkFeedPost[] = [
     description: 'How do you make a newcomer stand out among OG icons? Not with flavor notes, but with character personality. Defined campaign positioning, curated Zomaland multi-city content strategy, directed creator content formats, and executed live on-ground festival coverage.',
     items: [
       {
-        id: 'cornetto-item-1',
-        type: 'wireframe',
-        title: 'Mascot Reveal Anthem',
-        dimensionsLabel: '3:4 POSTER',
-        aspectRatio: '4:5',
-        caption: 'High-energy character intro establishing the quirky festival mascot.'
-      },
-      {
-        id: 'cornetto-item-2',
-        type: 'wireframe',
-        title: 'Festival On-Ground Banners',
-        dimensionsLabel: '1:1 GRID',
-        aspectRatio: '1:1',
-        caption: 'Experiential signage driving footfall to the Zomaland chill lounge.'
-      },
-      {
-        id: 'cornetto-item-3',
-        type: 'wireframe',
-        title: 'Creator TikTok / Reel Hooks',
-        dimensionsLabel: '1:1 GRID',
-        aspectRatio: '1:1',
-        caption: 'Bite-sized viral creator challenge scripts executed live at the festival.'
-      },
-      {
-        id: 'cornetto-item-4',
-        type: 'wireframe',
-        title: 'Festival Aftermovie Narrative',
+        id: 'cornetto-feed-video-1',
+        type: 'video',
+        title: 'Festival Creator Collab 01',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_flavour_launch_4.mp4',
         dimensionsLabel: '9:16 REEL',
         aspectRatio: '9:16',
-        caption: 'Recap film highlighting the multi-city tour and community fan moments.'
+        caption: 'Conceptualised by Harshpreet Kaur. Creator collaboration format enhancing the quirky traits of the new flavor launch character.'
+      },
+      {
+        id: 'cornetto-feed-video-2',
+        type: 'video',
+        title: 'Festival Creator Collab 02',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_Flavour_launch_5.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Conceptualised by Harshpreet Kaur. On-ground flavor tasting and character association challenge.'
+      },
+      {
+        id: 'cornetto-feed-video-3',
+        type: 'video',
+        title: 'Cornetto × Zomaland Anthem',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_xzomaland.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Conceptualised by Harshpreet Kaur. High-energy festival recap celebrating the mascot presence across multi-city stages.'
+      },
+      {
+        id: 'cornetto-feed-carousel-1',
+        type: 'image',
+        title: 'Audition Announcement Carousel (Cover)',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Cornetto_flavour_launch_2.png',
+        dimensionsLabel: '4:5 POST',
+        aspectRatio: '4:5',
+        caption: 'Mascot talent hunt audition teaser carousel kickoff.'
+      },
+      {
+        id: 'cornetto-feed-carousel-2',
+        type: 'image',
+        title: 'Audition Criteria & Personality',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730670/Cornetto_flavour_launch_carousel_1.png',
+        dimensionsLabel: '4:5 POST',
+        aspectRatio: '4:5',
+        caption: 'Character personality breakdowns and casting requirements.'
+      },
+      {
+        id: 'cornetto-feed-carousel-3',
+        type: 'image',
+        title: 'Flavor Association Breakdown',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730669/Cornetto_flavour_launch_carousel_2.png',
+        dimensionsLabel: '4:5 POST',
+        aspectRatio: '4:5',
+        caption: 'Connecting distinct palate notes with mascot behavioral traits.'
+      },
+      {
+        id: 'cornetto-feed-carousel-4',
+        type: 'image',
+        title: 'Creator Casting Callout',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730664/Cornetto_flavour_launch_carousel_3.jpg',
+        dimensionsLabel: '4:5 POST',
+        aspectRatio: '4:5',
+        caption: 'Direct-to-creator call-to-action for Zomaland auditions.'
+      },
+      {
+        id: 'cornetto-feed-char',
+        type: 'image',
+        title: 'Official Mascot Character Reveal',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730670/Cornetto_flavour_launch.png',
+        dimensionsLabel: '4:5 POST',
+        aspectRatio: '4:5',
+        caption: 'The final character announcement post introducing the quirky newcomer mascot.'
+      },
+      {
+        id: 'cornetto-feed-merch',
+        type: 'image',
+        title: 'Zomaland On-Ground Merchandise',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730668/Cornetto_Flavour_launch_3.png',
+        dimensionsLabel: '4:5 POST',
+        aspectRatio: '4:5',
+        caption: 'Limited edition festival merchandise expressing the irreverent personality of the character.'
       }
     ]
   },
@@ -599,6 +908,224 @@ export const WORK_FEED_POSTS: WorkFeedPost[] = [
         caption: '38% Open Rate emailer: "Did your skin just take a deep breath?"'
       }
     ]
+  },
+  {
+    id: 'vault-archive',
+    brandId: 'archive',
+    brandName: 'CONTENT VAULT',
+    brandLogoText: 'ARCHIVE',
+    brandCategory: 'REELS, FESTIVE & MOMENT MARKETING',
+    campaignTitle: 'THE ARCHIVE: HIGH-VELOCITY SOCIAL & CAMPAIGN CONTENT',
+    description: 'A dynamic multi-brand curation of creator reels, festive launch films, moment marketing creatives, and D2C campaign assets across Cornetto, Bobbi Brown, Johnson’s Baby, Lakmé, Novology, M·A·C, 7Up, and Clinique.',
+    items: [
+      {
+        id: 'vault-item-1',
+        type: 'video',
+        title: 'Cornetto BAU Reel',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_BAU_2.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Fast-paced BAU reel scripted and conceptualized for Cornetto social handles.'
+      },
+      {
+        id: 'vault-item-2',
+        type: 'video',
+        title: 'Bobbi Brown Dussehra Festive Reel',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Bobbi_Brown_Dussera.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'High-energy Dussehra festive beauty campaign scripted for Bobbi Brown.'
+      },
+      {
+        id: 'vault-item-3',
+        type: 'video',
+        title: "Johnson's Baby Halloween Campaign",
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Johnsons_baby_Halloween.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: "Tender, narrative-led Halloween campaign scripted for Johnson's Baby."
+      },
+      {
+        id: 'vault-item-4',
+        type: 'video',
+        title: 'Lakmé Sunscreen Launch Cut 06',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lakme_sunscreen_launch_6.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'High-octane sunscreen launch reel scripted for Lakmé.'
+      },
+      {
+        id: 'vault-item-5',
+        type: 'video',
+        title: 'Lakmé Pack Update Reveal',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Lakme_pack_update.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'Futuristic packaging refresh film scripted for Lakmé.'
+      },
+      {
+        id: 'vault-item-6',
+        type: 'video',
+        title: 'Novology Mini Wish List',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/Novology_Mini_Wish_List.mp4',
+        dimensionsLabel: '9:16 REEL',
+        aspectRatio: '9:16',
+        caption: 'D2C festive wishlist conversion film scripted for Novology.'
+      },
+      {
+        id: 'vault-item-7',
+        type: 'image',
+        title: 'Social Posts Carousel Collection',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790767551/Posts.jpg',
+        dimensionsLabel: '16:9 CAROUSEL',
+        aspectRatio: '16:9',
+        caption: 'Comprehensive curation of high-performing static posts and carousel headlines.'
+      },
+      {
+        id: 'vault-item-8',
+        type: 'image',
+        title: 'M·A·C Trend Copy',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730665/MAC_trend_Copy.jpg',
+        dimensionsLabel: '9:16 EDITORIAL',
+        aspectRatio: '9:16',
+        caption: 'Trend-jacking beauty editorial copy designed for M·A·C Cosmetics.'
+      },
+      {
+        id: 'vault-item-9',
+        type: 'image',
+        title: '7Up Moment Marketing Creative',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730660/7Up_Moment_Marketing.png',
+        dimensionsLabel: '9:16 CREATIVE',
+        aspectRatio: '9:16',
+        caption: 'Real-time moment marketing copy conceptualized for 7Up India.'
+      },
+      {
+        id: 'vault-item-10',
+        type: 'image',
+        title: 'Clinique Pink Friday Promo Copy',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Clinique_Pink_Friday_Copy.png',
+        dimensionsLabel: '9:16 RETAIL',
+        aspectRatio: '9:16',
+        caption: 'Direct response retail conversion poster for Clinique Pink Friday.'
+      },
+      {
+        id: 'vault-item-11',
+        type: 'image',
+        title: 'Clinique Holi Festive Creative',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Clinique_Holi.png',
+        dimensionsLabel: '9:16 FESTIVE',
+        aspectRatio: '9:16',
+        caption: 'Vibrant cultural storytelling and skincare copy for Clinique Holi campaign.'
+      }
+    ]
+  }
+];
+
+export const ARCHIVE_GALLERY_ITEMS: ArchiveGalleryItem[] = [
+  {
+    id: 'cornetto-bau-2',
+    type: 'video',
+    brand: 'CORNETTO',
+    title: 'Cornetto BAU Reel',
+    category: 'REEL / CONTENT',
+    videoUrl: 'https://res.cloudinary.com/uybanqfq/video/upload/Cornetto_BAU_2.mp4',
+    embedUrl: 'https://player.cloudinary.com/embed/?cloud_name=uybanqfq&public_id=Cornetto_BAU_2',
+    aspectRatio: 360 / 640 // 0.5625
+  },
+  {
+    id: 'bobbi-brown-dussera',
+    type: 'video',
+    brand: 'BOBBI BROWN',
+    title: 'Dussehra Festive Campaign',
+    category: 'FESTIVE / SCRIPT',
+    videoUrl: 'https://res.cloudinary.com/uybanqfq/video/upload/Bobbi_Brown_Dussera.mp4',
+    embedUrl: 'https://player.cloudinary.com/embed/?cloud_name=uybanqfq&public_id=Bobbi_Brown_Dussera',
+    aspectRatio: 720 / 1280 // 0.5625
+  },
+  {
+    id: 'johnsons-baby-halloween',
+    type: 'video',
+    brand: "JOHNSON'S BABY",
+    title: 'Halloween Campaign Film',
+    category: 'CAMPAIGN / SCRIPT',
+    videoUrl: 'https://res.cloudinary.com/uybanqfq/video/upload/Johnsons_baby_Halloween.mp4',
+    embedUrl: 'https://player.cloudinary.com/embed/?cloud_name=uybanqfq&public_id=Johnsons_baby_Halloween',
+    aspectRatio: 720 / 1280 // 0.5625
+  },
+  {
+    id: 'lakme-sunscreen-launch-6',
+    type: 'video',
+    brand: 'LAKMĒ',
+    title: 'Sunscreen Launch Cut 06',
+    category: 'LAUNCH SPRINT',
+    videoUrl: 'https://res.cloudinary.com/uybanqfq/video/upload/Lakme_sunscreen_launch_6.mp4',
+    embedUrl: 'https://player.cloudinary.com/embed/?cloud_name=uybanqfq&public_id=Lakme_sunscreen_launch_6',
+    aspectRatio: 720 / 1280 // 0.5625
+  },
+  {
+    id: 'lakme-pack-update',
+    type: 'video',
+    brand: 'LAKMĒ',
+    title: 'Pack Update Unveil',
+    category: 'PRODUCT PACKAGING',
+    videoUrl: 'https://res.cloudinary.com/uybanqfq/video/upload/Lakme_pack_update.mp4',
+    embedUrl: 'https://player.cloudinary.com/embed/?cloud_name=uybanqfq&public_id=Lakme_pack_update',
+    aspectRatio: 720 / 1280 // 0.5625
+  },
+  {
+    id: 'novology-mini-wish-list',
+    type: 'video',
+    brand: 'NOVOLOGY',
+    title: 'Mini Wish List Campaign',
+    category: 'D2C CAMPAIGN',
+    videoUrl: 'https://res.cloudinary.com/uybanqfq/video/upload/Novology_Mini_Wish_List.mp4',
+    embedUrl: 'https://player.cloudinary.com/embed/?cloud_name=uybanqfq&public_id=Novology_Mini_Wish_List',
+    aspectRatio: 720 / 1280 // 0.5625
+  },
+  {
+    id: 'archive-posts-grid',
+    type: 'image',
+    brand: 'PORTFOLIO ARCHIVE',
+    title: 'Social Posts Collection',
+    category: 'CAROUSEL & STATIC DUMP',
+    imageUrl: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790767551/Posts.jpg',
+    aspectRatio: 858 / 482 // 1.78
+  },
+  {
+    id: 'mac-trend-copy',
+    type: 'image',
+    brand: 'M·A·C COSMETICS',
+    title: 'MAC Trend Copy',
+    category: 'PRINT & DIGITAL',
+    imageUrl: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730665/MAC_trend_Copy.jpg',
+    aspectRatio: 1027 / 1483 // 0.692
+  },
+  {
+    id: '7up-moment-marketing',
+    type: 'image',
+    brand: '7UP',
+    title: 'Moment Marketing Creative',
+    category: 'MOMENT MARKETING',
+    imageUrl: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730660/7Up_Moment_Marketing.png',
+    aspectRatio: 1023 / 1406 // 0.727
+  },
+  {
+    id: 'clinique-pink-friday',
+    type: 'image',
+    brand: 'CLINIQUE',
+    title: 'Pink Friday Copy',
+    category: 'PROMO / RETAIL',
+    imageUrl: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Clinique_Pink_Friday_Copy.png',
+    aspectRatio: 1030 / 1388 // 0.742
+  },
+  {
+    id: 'clinique-holi',
+    type: 'image',
+    brand: 'CLINIQUE',
+    title: 'Holi Festive Campaign',
+    category: 'FESTIVE CREATIVE',
+    imageUrl: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Clinique_Holi.png',
+    aspectRatio: 1033 / 1496 // 0.69
   }
 ];
 

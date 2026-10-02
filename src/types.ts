@@ -89,3 +89,15 @@ export interface WorkFeedPost {
   description: string;
   items: WorkMediaItem[];
 }
+
+export interface ArchiveGalleryItem {
+  id: string;
+  type: 'video' | 'image';
+  title: string;
+  brand: string;
+  videoUrl?: string;
+  embedUrl?: string;
+  imageUrl?: string;
+  category: string;
+  aspectRatio: number;
+}
