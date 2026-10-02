@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ARCHIVE_SKILLS, ARCHIVE_GALLERY_ITEMS } from '../data/portfolioData';
 import { ArchiveGalleryItem } from '../types';
-import { ExternalLink, Play, Volume2, VolumeX, Shuffle, Maximize2, X, Sparkles } from 'lucide-react';
+import { ExternalLink, Volume2, VolumeX, X } from 'lucide-react';
 
 interface ArchiveSectionProps {
   onOpenWork: () => void;
@@ -97,8 +97,8 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
       className="w-full bg-white pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-10 sm:pb-14 lg:pb-16 px-4 sm:px-6 lg:px-8 select-none relative"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Section Header: ARCHIVE title, live status, and [SEE ALL] button */}
-        <div className="flex flex-wrap items-baseline justify-between pb-4 mb-6 sm:mb-8 border-b border-neutral-200">
+        {/* Section Header: ARCHIVE title and [SEE ALL] button */}
+        <div className="flex items-baseline justify-between pb-4 mb-6 sm:mb-8 border-b border-neutral-200">
           <div className="flex items-baseline gap-4 sm:gap-6">
             <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl text-[#FF0000] tracking-tight uppercase leading-none">
               ARCHIVE
@@ -110,29 +110,6 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
             >
               <span>[SEE ALL]</span>
               <ExternalLink size={14} />
-            </button>
-          </div>
-
-          {/* Right Header Status: Live Shuffling Indicator & Manual Shuffle */}
-          <div className="flex items-center gap-3 mt-2 sm:mt-0">
-            <div className="flex items-center gap-2 bg-neutral-100 border border-neutral-300/80 px-2.5 py-1">
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  isInView && !isHovered ? 'bg-[#FF0000] animate-ping' : 'bg-neutral-400'
-                }`}
-              />
-              <span className="font-courier text-[10px] font-bold tracking-wider uppercase text-neutral-800">
-                {isHovered ? 'SHUFFLE PAUSED' : 'DYNAMIC SHUFFLE ACTIVE'}
-              </span>
-            </div>
-
-            <button
-              onClick={shuffleNextSlot}
-              className="hidden sm:flex items-center gap-1.5 font-courier text-[10px] font-bold tracking-wider uppercase bg-black hover:bg-[#FF0000] text-white px-2.5 py-1 transition-colors cursor-pointer"
-              title="Shuffle next item now"
-            >
-              <Shuffle size={11} />
-              <span>SHUFFLE</span>
             </button>
           </div>
         </div>
@@ -181,16 +158,16 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
             </div>
           </div>
 
-          {/* Right Column: Dynamic Shuffling Media Gallery */}
+          {/* Right Column: Dynamic Shuffling Media Gallery - Pure Media without boxes or lines */}
           <div
             className="col-span-7 sm:col-span-7 md:col-span-8 lg:col-span-8 flex flex-col justify-center"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {/* Dynamic Bounded Gallery Container - Fits strictly within the allocated section height */}
-            <div className="relative w-full h-[320px] sm:h-[380px] md:h-[440px] lg:h-[480px] overflow-hidden bg-neutral-950 border border-neutral-800 p-1.5 sm:p-2">
+            {/* Dynamic Bounded Gallery Container - Pure white, no borders or box outlines */}
+            <div className="relative w-full h-[320px] sm:h-[380px] md:h-[440px] lg:h-[480px] overflow-hidden bg-white">
               {/* Flex row of dynamic panels */}
-              <div className="w-full h-full flex items-center justify-center gap-1.5 sm:gap-2.5 overflow-hidden">
+              <div className="w-full h-full flex items-center justify-center gap-2 sm:gap-3.5 overflow-hidden">
                 {visibleItems.map((item, idx) => {
                   const isFading = fadingSlotIndex === idx;
                   const isVideo = item.type === 'video';
@@ -205,12 +182,12 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
                         minWidth: 0,
                         height: '100%'
                       }}
-                      className={`h-full bg-black border border-neutral-800 hover:border-[#FF0000] relative overflow-hidden group cursor-pointer transition-all duration-700 ease-in-out flex flex-col justify-between ${
+                      className={`h-full bg-white relative overflow-hidden group cursor-pointer transition-all duration-700 ease-in-out flex items-center justify-center ${
                         isFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
                       }`}
                     >
-                      {/* Media container: object-contain guarantees zero cropping */}
-                      <div className="w-full h-full relative flex items-center justify-center bg-black overflow-hidden">
+                      {/* Media container: Pure uncropped digital media on white background, no boxes or outlines */}
+                      <div className="w-full h-full relative flex items-center justify-center bg-white overflow-hidden">
                         {isVideo && item.videoUrl ? (
                           <video
                             src={item.videoUrl}
@@ -219,55 +196,26 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
                             loop
                             playsInline
                             preload="metadata"
-                            className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-contain bg-white pointer-events-none select-none transition-transform duration-500 group-hover:scale-[1.02]"
                           />
                         ) : item.imageUrl ? (
                           <img
                             src={item.imageUrl}
                             alt={item.title}
-                            className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-contain bg-white pointer-events-none select-none transition-transform duration-500 group-hover:scale-[1.02]"
                           />
                         ) : null}
 
-                        {/* Top Subtle Badge */}
-                        <div className="absolute top-2 left-2 z-10 pointer-events-none">
-                          <span className="font-courier text-[8px] sm:text-[9px] font-bold bg-black/85 text-white border border-neutral-700/80 px-1.5 py-0.5 uppercase tracking-wider">
-                            {isVideo ? 'REEL' : 'PRINT'}
+                        {/* Subtle minimal hover overlay with Brand & Title */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-3 flex flex-col justify-end pointer-events-none z-20">
+                          <span className="font-courier text-[10px] sm:text-xs text-white font-bold uppercase truncate drop-shadow">
+                            {item.brand} // {item.title}
                           </span>
-                        </div>
-
-                        {/* Hover Overlay with Metadata & Inspect Cue */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-2.5 sm:p-3 flex flex-col justify-between pointer-events-none z-20">
-                          <div className="flex justify-between items-center text-[9px] font-courier text-white">
-                            <span className="bg-[#FF0000] px-1.5 py-0.5 font-bold uppercase tracking-wider">
-                              {item.brand}
-                            </span>
-                            <span className="bg-black/80 px-1.5 py-0.5 uppercase flex items-center gap-1 text-[8px]">
-                              <Maximize2 size={10} />
-                              ZOOM
-                            </span>
-                          </div>
-
-                          <div className="flex flex-col gap-0.5">
-                            <span className="font-courier text-[10px] sm:text-[11px] text-white font-bold uppercase truncate drop-shadow">
-                              {item.title}
-                            </span>
-                            <span className="font-courier text-[8px] text-neutral-400 uppercase tracking-widest">
-                              {item.category}
-                            </span>
-                          </div>
                         </div>
                       </div>
                     </div>
                   );
                 })}
-              </div>
-
-              {/* Bottom Subtle Navigation / Info Bar */}
-              <div className="absolute bottom-2 right-2.5 z-20 pointer-events-none flex items-center gap-2">
-                <span className="font-courier text-[8px] sm:text-[9px] text-neutral-400 bg-black/80 px-2 py-0.5 border border-neutral-800 uppercase tracking-wider">
-                  POOL: 11 ASSETS // SHUFFLING
-                </span>
               </div>
             </div>
           </div>
