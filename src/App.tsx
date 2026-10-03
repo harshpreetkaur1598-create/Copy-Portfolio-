@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroCarousel } from './components/HeroCarousel';
 import { StatsBar } from './components/StatsBar';
@@ -14,12 +14,35 @@ import { ContactSection } from './components/ContactSection';
 import { WorkPage } from './components/WorkPage';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'work'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'work'>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      const params = new URLSearchParams(window.location.search);
+      if (hash === '#work' || params.get('view') === 'work') {
+        return 'work';
+      }
+    }
+    return 'home';
+  });
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#work') {
+        setCurrentView('work');
+      } else if (hash === '#home' || hash === '' || hash === '#') {
+        setCurrentView('home');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const navigateToWork = () => {
     setCurrentView('work');
     try {
+      window.location.hash = 'work';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
       window.scrollTo(0, 0);
@@ -29,6 +52,9 @@ export default function App() {
   const navigateToHome = () => {
     setCurrentView('home');
     try {
+      if (window.location.hash === '#work') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
       window.scrollTo(0, 0);

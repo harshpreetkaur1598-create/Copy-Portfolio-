@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { WORK_FEED_POSTS } from '../data/portfolioData';
 import { WorkFeedPost, WorkMediaItem } from '../types';
 import { ChevronLeft, ChevronRight, Play, ExternalLink } from 'lucide-react';
+import { getBrandLogo } from '../utils/brandLogos';
 
 interface WorkPageProps {
   onNavigateHome: () => void;
@@ -84,6 +85,59 @@ interface FeedPostCardProps {
   post: WorkFeedPost;
 }
 
+function isVideoItem(item?: WorkMediaItem): boolean {
+  if (!item || !item.url) return false;
+  if (item.type === 'video') return true;
+  if (item.type === 'image') return false;
+  const cleanUrl = item.url.toLowerCase();
+  if (
+    cleanUrl.endsWith('.jpg') ||
+    cleanUrl.endsWith('.jpeg') ||
+    cleanUrl.endsWith('.png') ||
+    cleanUrl.endsWith('.webp') ||
+    cleanUrl.endsWith('.gif') ||
+    cleanUrl.includes('/image/upload/')
+  ) {
+    return false;
+  }
+  return (
+    cleanUrl.endsWith('.mp4') ||
+    cleanUrl.endsWith('.webm') ||
+    cleanUrl.endsWith('.mov') ||
+    cleanUrl.includes('/video/upload/') ||
+    cleanUrl.includes('player.cloudinary.com/embed')
+  );
+}
+
+function resolveMediaUrl(url?: string): string {
+  if (!url) return '';
+  if (url.includes('player.cloudinary.com/embed')) {
+    try {
+      const parsed = new URL(url);
+      const publicId = parsed.searchParams.get('public_id');
+      const cloudName = parsed.searchParams.get('cloud_name') || 'uybanqfq';
+      if (publicId) {
+        return `https://res.cloudinary.com/${cloudName}/video/upload/${publicId}.mp4`;
+      }
+    } catch {
+      // ignore parsing error and return original url
+    }
+  }
+  return url;
+}
+
+function getBrandInitials(name: string): string {
+  if (name.includes('M.A.C') || name.includes('MAC')) return 'MAC';
+  if (name.includes('7Up') || name.includes('7UP')) return '7UP';
+  if (name.toLowerCase().includes('sbi')) return 'SBIG';
+  if (name.toLowerCase().includes('johnson')) return 'JB';
+  if (name.toLowerCase().includes('lakm')) return 'LK';
+  if (name.toLowerCase().includes('lux')) return 'LUX';
+  const cleanParts = name.replace(/[^a-zA-Z0-9 ]/g, '').trim().split(/\s+/);
+  if (cleanParts.length >= 2) return (cleanParts[0][0] + cleanParts[1][0]).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
+
 const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const totalItems = post.items.length;
@@ -97,26 +151,32 @@ const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
     setActiveIndex((prev) => (prev < totalItems - 1 ? prev + 1 : 0));
   };
 
+  const brandLogoUrl = getBrandLogo(post.brandId || post.brandName);
+
   return (
     <article className="bg-white border border-neutral-300 shadow-sm overflow-hidden select-none">
       {/* Top Bar: Brand Logo & Category (In place of Instagram username) */}
       <div className="px-4 py-3 sm:px-5 sm:py-3.5 border-b border-neutral-200 flex items-center justify-between bg-white">
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Brand Logo Avatar/Badge */}
-          <div className="w-8 h-8 sm:w-9 sm:h-9 bg-black text-white flex items-center justify-center font-anton text-sm tracking-wider uppercase shrink-0">
-            {post.brandName.slice(0, 2)}
+          {/* Brand Logo Avatar (Profile picture picking official logo from homepage ticker tape) */}
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-neutral-300 bg-white p-1 flex items-center justify-center overflow-hidden shrink-0 shadow-xs">
+            {brandLogoUrl ? (
+              <img
+                src={brandLogoUrl}
+                alt={`${post.brandName} official logo`}
+                className="w-full h-full object-contain"
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-full bg-black text-white rounded-full flex items-center justify-center font-anton text-xs uppercase">
+                {getBrandInitials(post.brandName)}
+              </div>
+            )}
           </div>
           <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="font-anton text-base sm:text-lg text-black uppercase tracking-tight leading-none">
-                {post.brandName}
-              </span>
-              {post.brandCategory && (
-                <span className="font-courier text-[10px] uppercase font-bold text-[#FF0000] bg-[#FF0000]/10 px-1.5 py-0.5 leading-none">
-                  {post.brandCategory}
-                </span>
-              )}
-            </div>
+            <span className="font-anton text-base sm:text-lg text-black uppercase tracking-tight leading-none">
+              {post.brandName}
+            </span>
             <span className="font-courier text-[11px] text-neutral-500 uppercase tracking-wide leading-tight mt-0.5">
               {post.campaignTitle}
             </span>
@@ -145,6 +205,25 @@ const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
               : 'aspect-square'
           }`}
         >
+          {/* Top media category badge overlay on the media display */}
+          {currentItem?.url && (currentItem?.mediaCategory || currentItem?.dimensionsLabel) && (
+            <div className="absolute top-3 left-3 z-30 pointer-events-none flex items-center gap-2">
+              <span className="font-courier text-[10px] sm:text-xs font-bold uppercase tracking-wider text-black bg-white px-2.5 py-1 shadow-md border border-neutral-300 flex items-center gap-1.5 select-none">
+                <span className="w-1.5 h-1.5 bg-[#FF0000] inline-block" />
+                {currentItem.mediaCategory || currentItem.dimensionsLabel}
+              </span>
+            </div>
+          )}
+
+          {/* Top-right counter badge on the media display if multi-item */}
+          {currentItem?.url && totalItems > 1 && (
+            <div className="absolute top-3 right-3 z-30 pointer-events-none">
+              <span className="font-courier text-[10px] font-bold text-white bg-black/80 backdrop-blur-sm px-2 py-1 uppercase tracking-wider border border-white/20 select-none">
+                0{activeIndex + 1} / {totalItems < 10 ? `0${totalItems}` : totalItems}
+              </span>
+            </div>
+          )}
+
           {/* Render Actual Media or Brutalist Wireframe Placeholder */}
           {currentItem?.url ? (
             currentItem.type === 'youtube' || currentItem.url.includes('youtube.com') || currentItem.url.includes('youtu.be') ? (
@@ -177,9 +256,10 @@ const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
                   <ExternalLink size={10} />
                 </a>
               </div>
-            ) : currentItem.type === 'video' || currentItem.url.endsWith('.mp4') || currentItem.url.endsWith('.webm') || currentItem.url.includes('cloudinary') ? (
+            ) : isVideoItem(currentItem) ? (
               <video
-                src={currentItem.url}
+                key={resolveMediaUrl(currentItem.url)}
+                src={resolveMediaUrl(currentItem.url)}
                 controls
                 autoPlay
                 loop
@@ -196,6 +276,7 @@ const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
               />
             ) : (
               <img
+                key={currentItem.url}
                 src={currentItem.url}
                 alt={currentItem.title || post.campaignTitle}
                 className="w-full h-full object-contain bg-black"
@@ -218,7 +299,7 @@ const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
               {/* Slot Top: Type & Dimensions */}
               <div className="flex items-center justify-between relative z-10">
                 <span className="font-courier text-[10px] sm:text-xs font-bold uppercase tracking-wider text-black bg-white px-2 py-0.5">
-                  {currentItem?.dimensionsLabel || 'MEDIA ASSET'}
+                  {currentItem?.mediaCategory || currentItem?.dimensionsLabel || 'MEDIA ASSET'}
                 </span>
                 <span className="font-courier text-[10px] text-neutral-500 uppercase tracking-widest">
                   SLOT 0{activeIndex + 1}
@@ -287,29 +368,46 @@ const FeedPostCard: React.FC<FeedPostCardProps> = ({ post }) => {
       </div>
 
       {/* Description / Caption Block Under Media */}
-      <div className="p-4 sm:p-5 bg-white space-y-2 border-t border-neutral-100">
-        <div className="flex items-baseline gap-2">
-          <span className="font-anton text-sm sm:text-base text-black uppercase tracking-tight">
-            {post.brandName}
-          </span>
-          <span className="font-courier text-xs sm:text-sm font-bold text-[#FF0000] uppercase">
-            // {post.campaignTitle}
-          </span>
-        </div>
-
-        {/* Small description of the campaign or post you see */}
-        <p className="font-courier text-xs sm:text-sm text-neutral-800 leading-relaxed">
-          {post.description}
-        </p>
-
-        {/* Current Active Item Detail Note */}
-        {currentItem?.caption && (
-          <div className="pt-2 text-[11px] font-courier text-neutral-500 border-t border-neutral-100 flex items-start gap-1.5">
-            <span className="text-[#FF0000] font-bold">•</span>
-            <span>
-              <strong>{currentItem.title}:</strong> {currentItem.caption}
+      <div className="p-4 sm:p-5 bg-white space-y-3 border-t border-neutral-100">
+        {post.brandCategory && (
+          <div>
+            <span className="font-courier text-[10px] sm:text-xs uppercase font-bold text-[#FF0000] bg-[#FF0000]/10 px-2 py-0.5 w-fit inline-block">
+              {post.brandCategory}
             </span>
           </div>
+        )}
+
+        {/* Current Active Item Detail Note */}
+        {(currentItem?.mediaCategory || currentItem?.title || currentItem?.caption) && (
+          <div className="py-2.5 px-3 bg-neutral-50 border border-neutral-200/80 rounded-sm flex items-start gap-2.5">
+            <span className="text-[#FF0000] font-bold text-xs mt-0.5">•</span>
+            <div className="space-y-1 flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                {currentItem?.mediaCategory && (
+                  <span className="font-bold text-[10px] uppercase bg-black text-white px-1.5 py-0.5 tracking-wider">
+                    {currentItem.mediaCategory}
+                  </span>
+                )}
+                {currentItem?.title && (
+                  <span className="font-bold text-xs text-black uppercase tracking-wide">
+                    {currentItem.title}
+                  </span>
+                )}
+              </div>
+              {currentItem?.caption && (
+                <p className="text-[11px] font-courier text-neutral-600 leading-relaxed">
+                  {currentItem.caption}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Small description of the campaign or post you see */}
+        {post.description && (
+          <p className="font-courier text-xs sm:text-sm text-neutral-800 leading-relaxed">
+            {post.description}
+          </p>
         )}
       </div>
     </article>

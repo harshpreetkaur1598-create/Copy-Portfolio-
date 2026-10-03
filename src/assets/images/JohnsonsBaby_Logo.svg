@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="92" fill="#FFFFFF" stroke="#005A9C" stroke-width="4"/>
+  <!-- Stylized Johnson's baby cursive brandmark -->
+  <g fill="#005A9C">
+    <path d="M50 82 C55 68, 65 60, 76 60 C83 60, 87 64, 87 71 C87 86, 68 98, 52 104 C48 97, 48 89, 50 82 Z" opacity="0.15"/>
+    <text x="100" y="98" font-family="'Brush Script MT', 'Bickham Script Pro', cursive, 'Snell Roundhand', Georgia, serif" font-size="34" font-weight="bold" font-style="italic" text-anchor="middle" fill="#005A9C" letter-spacing="-0.5">
+      Johnson's
+    </text>
+    <text x="100" y="126" font-family="'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#005A9C" letter-spacing="3" text-transform="lowercase">
+      baby
+    </text>
+  </g>
+</svg>

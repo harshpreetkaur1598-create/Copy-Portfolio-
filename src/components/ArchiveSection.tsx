@@ -13,12 +13,23 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
   const [isHovered, setIsHovered] = useState(false);
 
   // Active items displayed in 3 dynamic slots
-  // Initial seed: mix of video, image, video
-  const [visibleItems, setVisibleItems] = useState<ArchiveGalleryItem[]>([
-    ARCHIVE_GALLERY_ITEMS[0], // Cornetto BAU (video)
-    ARCHIVE_GALLERY_ITEMS[6], // Posts collection (image)
-    ARCHIVE_GALLERY_ITEMS[1], // Bobbi Brown Dussehra (video)
-  ]);
+  // Initial seed: pick 3 distinct items (video, image, video) with distinct media URLs
+  const [visibleItems, setVisibleItems] = useState<ArchiveGalleryItem[]>(() => {
+    const videos = ARCHIVE_GALLERY_ITEMS.filter((item) => item.type === 'video');
+    const images = ARCHIVE_GALLERY_ITEMS.filter((item) => item.type === 'image');
+    const item0 = videos[0] || ARCHIVE_GALLERY_ITEMS[0];
+    const item1 = images[0] || ARCHIVE_GALLERY_ITEMS[1];
+    const item2 = videos[1] || ARCHIVE_GALLERY_ITEMS[2];
+    return [item0, item1, item2];
+  });
+
+  // Ref tracking what is currently occupying (or reserved for) all slots to strictly prevent duplicate items
+  const visibleItemsRef = useRef<ArchiveGalleryItem[]>(visibleItems);
+  const isTransitioningRef = useRef(false);
+
+  useEffect(() => {
+    visibleItemsRef.current = visibleItems;
+  }, [visibleItems]);
 
   // Which slot is currently transitioning / crossfading
   const [fadingSlotIndex, setFadingSlotIndex] = useState<number | null>(null);
@@ -44,39 +55,56 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
     return () => observer.disconnect();
   }, []);
 
-  // Shuffle a specific slot to a new unused item
+  // Shuffle a specific slot to a new unused item with strict duplicate prevention
   const shuffleNextSlot = () => {
-    setVisibleItems((currentVisible) => {
-      const targetSlot = currentSlotPointer.current;
-      currentSlotPointer.current = (currentSlotPointer.current + 1) % 3;
+    if (isTransitioningRef.current) return;
+    const targetSlot = currentSlotPointer.current;
+    currentSlotPointer.current = (currentSlotPointer.current + 1) % 3;
 
-      // Find items not currently shown in any slot
-      const currentIds = new Set(currentVisible.map((item) => item.id));
-      const pool = ARCHIVE_GALLERY_ITEMS.filter((item) => !currentIds.has(item.id));
-
-      if (pool.length === 0) return currentVisible;
-
-      // Pick a random candidate from available pool
-      const nextItem = pool[Math.floor(Math.random() * pool.length)];
-
-      // Trigger fade out
-      setFadingSlotIndex(targetSlot);
-
-      setTimeout(() => {
-        setVisibleItems((prev) => {
-          const next = [...prev];
-          next[targetSlot] = nextItem;
-          return next;
-        });
-
-        // Trigger fade in
-        setTimeout(() => {
-          setFadingSlotIndex(null);
-        }, 80);
-      }, 350);
-
-      return currentVisible;
+    // Collect all media URLs and IDs currently displayed in any slot
+    const activeIds = new Set<string>();
+    const activeMediaUrls = new Set<string>();
+    visibleItemsRef.current.forEach((item) => {
+      if (item) {
+        activeIds.add(item.id);
+        if (item.videoUrl) activeMediaUrls.add(item.videoUrl.trim().toLowerCase());
+        if (item.imageUrl) activeMediaUrls.add(item.imageUrl.trim().toLowerCase());
+      }
     });
+
+    // Pool of items NOT currently displayed in any slot and not sharing media URLs
+    const eligiblePool = ARCHIVE_GALLERY_ITEMS.filter((item) => {
+      if (activeIds.has(item.id)) return false;
+      if (item.videoUrl && activeMediaUrls.has(item.videoUrl.trim().toLowerCase())) return false;
+      if (item.imageUrl && activeMediaUrls.has(item.imageUrl.trim().toLowerCase())) return false;
+      return true;
+    });
+
+    if (eligiblePool.length === 0) return;
+
+    // Pick a random candidate from available pool
+    const nextItem = eligiblePool[Math.floor(Math.random() * eligiblePool.length)];
+
+    // Immediately reserve this slot in the ref so another check won't pick the same item
+    visibleItemsRef.current[targetSlot] = nextItem;
+    isTransitioningRef.current = true;
+
+    // Trigger fade out
+    setFadingSlotIndex(targetSlot);
+
+    setTimeout(() => {
+      setVisibleItems((prev) => {
+        const next = [...prev];
+        next[targetSlot] = nextItem;
+        return next;
+      });
+
+      // Trigger fade in
+      setTimeout(() => {
+        setFadingSlotIndex(null);
+        isTransitioningRef.current = false;
+      }, 100);
+    }, 350);
   };
 
   // Constant automatic shuffling every 3.8s when in view and not hovered or inspecting

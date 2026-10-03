@@ -76,6 +76,7 @@ export interface WorkMediaItem {
   thumbnailUrl?: string;
   aspectRatio?: '1:1' | '4:5' | '9:16' | '16:9';
   dimensionsLabel?: string;
+  mediaCategory?: string;
   caption?: string;
 }
 
