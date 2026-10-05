@@ -102,3 +102,23 @@ export interface ArchiveGalleryItem {
   category: string;
   aspectRatio: number;
 }
+
+export interface AccordionMediaItem {
+  id: string;
+  type: 'image' | 'video';
+  title?: string;
+  subtitle?: string;
+  accountHandle?: string;
+  isVerified?: boolean;
+  url: string;
+  captionHeadline?: string;
+  captionSubline?: string;
+  aspectRatio?: '1:1' | '4:5' | '9:16' | '16:9';
+}
+
+export interface ArchiveAccordionCategory {
+  id: 'social' | 'performance' | 'ecommerce';
+  title: string;
+  bullets: string[];
+  media: AccordionMediaItem[];
+}

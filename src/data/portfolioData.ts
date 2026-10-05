@@ -1,32 +1,247 @@
-import { HeroSlide, StatItem, ArchiveSkill, MoodboardTile, BrandLogo, CaseStudy, WorkFeedPost, WorkMediaItem, ArchiveGalleryItem } from '../types';
+import { HeroSlide, StatItem, ArchiveSkill, MoodboardTile, BrandLogo, CaseStudy, WorkFeedPost, WorkMediaItem, ArchiveGalleryItem, ArchiveAccordionCategory } from '../types';
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
     id: 1,
     phrase1: ['COPY-PASTE', 'GETS CLOCKED.'],
-    phrase2Lines: ['GET COPY, CONCEPTS,', 'AND CONTENT'],
+    phrase2Lines: ['I CREATE CONTENT'],
     phrase2Lead: 'THAT ',
     phrase2Accent: 'CONVERTS.',
-    subtext: "From hooks that stop the scroll to CTAs that get clicked,\nI write copy that doesn't just grab attention, but guides audiences straight to the bottom of the funnel.",
-    ctaText: 'EXPLORE WORK'
+    subtext: '',
+    ctaText: ''
   },
   {
     id: 2,
     phrase1: ['WEAK BUCKETS', 'DRAIN BUDGETS.'],
-    phrase2Lines: ['INVEST IN STRATEGY', 'DESIGNED FOR'],
-    phrase2Lead: '',
-    phrase2Accent: 'RETENTION.',
-    subtext: 'Research-led insights, impactful storytelling, and sharp strategy as my tools, I go beyond ideation and create blueprints that lead to successful campaigns.',
-    ctaText: 'EXPLORE WORK'
+    phrase2Lines: ['I BUILD STRATEGY'],
+    phrase2Lead: 'THAT ',
+    phrase2Accent: 'RETAINS.',
+    subtext: '',
+    ctaText: ''
   },
   {
     id: 3,
     phrase1: ['TRENDS EXPIRE.', 'STORIES STICK.'],
-    phrase2Lines: ['EARN LOYALTY', 'WITH CAMPAIGNS'],
+    phrase2Lines: ['I DESIGN CAMPAIGNS'],
     phrase2Lead: 'THAT ',
     phrase2Accent: 'CLICK.',
-    subtext: "Touchpoints aren't just boxes to cross off a checklist; they are opportunities to build trust. I create the narrative foundations needed to turn campaigns into lasting emotional connections.",
-    ctaText: 'EXPLORE WORK'
+    subtext: '',
+    ctaText: ''
+  }
+];
+
+export const ARCHIVE_ACCORDION_CATEGORIES: ArchiveAccordionCategory[] = [
+  {
+    id: 'social',
+    title: 'SOCIAL',
+    bullets: [
+      'TREND TRACKING',
+      'ANNUAL OPERATING PLAN',
+      'GTM STRATEGY',
+      'ALWAYS-ON STRATEGY',
+      'PERFORMANCE AUDITS'
+    ],
+    media: [
+      {
+        id: 'social-clinique-pink-friday',
+        type: 'image',
+        accountHandle: 'clinique_in',
+        isVerified: true,
+        captionHeadline: "SHE'S ALREADY CULT CODED.",
+        captionSubline: "Pink Friday just made her better.",
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Clinique_Pink_Friday_Copy.png',
+        title: 'Clinique // Pink Friday High-Intent Promo',
+        aspectRatio: '4:5'
+      },
+      {
+        id: 'social-trend-copy',
+        type: 'image',
+        accountHandle: 'MACCosmeticsindia',
+        isVerified: true,
+        captionHeadline: 'TREND COPY // CULTURE MOMENT',
+        captionSubline: 'Real-Time Engagement Topical Creative',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730658/Trend_Copy.png',
+        title: 'Trend Copy // Culture Jack',
+        aspectRatio: '1:1'
+      },
+      {
+        id: 'social-rouge-bloom-ananya',
+        type: 'video',
+        accountHandle: 'lakmeindia',
+        isVerified: true,
+        captionHeadline: 'ROUGE BLOOM // ANANYA PANDAY',
+        captionSubline: 'Matte Meets Sensorial Liquid Lip Launch Film',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790927434/Rouge_Bloom_Ananya_Video_1.mp4',
+        title: 'Lakmé Rouge Bloom // Hero Launch Film',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'social-novo-launch',
+        type: 'video',
+        accountHandle: 'Novologyofficial',
+        isVerified: true,
+        captionHeadline: 'BARRIER FIRST SCIENCE',
+        captionSubline: 'Clinical Formulations Engineered for Indian Skin',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790927673/Novo_launch_1.mp4',
+        title: 'Novology // Brand GTM Launch Reel',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'social-novo-trend',
+        type: 'image',
+        accountHandle: 'Novologyofficial',
+        isVerified: true,
+        captionHeadline: 'SKINCARE RED FLAGS',
+        captionSubline: 'Ingredient Busters & Active Education',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730664/Novo_Trend.png',
+        title: 'Novology // Skincare Red Flags Static',
+        aspectRatio: '1:1'
+      },
+      {
+        id: 'social-bru-gold-vibe',
+        type: 'video',
+        accountHandle: 'brucoffee_in',
+        isVerified: true,
+        captionHeadline: 'UPGRADE YOUR CUP',
+        captionSubline: 'Sensorial Aroma & Granule Richness Vibe',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790929582/Bru_Gold_Vibe_video.mp4',
+        title: 'Bru Gold // Premium Vibe Video',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'social-lakme-sunscreen-6',
+        type: 'video',
+        accountHandle: 'lakmeindia',
+        isVerified: true,
+        captionHeadline: 'INVISIBLE UV SHIELD',
+        captionSubline: 'Zero White Cast • Maximum Broad Spectrum Shield',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790929491/Lakme_sunscreen_launch_6.mp4',
+        title: 'Lakmé Sunscreen // UV Shield Reel',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'social-lakme-pack-update',
+        type: 'video',
+        accountHandle: 'lakmeindia',
+        isVerified: true,
+        captionHeadline: 'FRESH FACE, ICONIC FORMULA',
+        captionSubline: 'Modernized Silhouette & Luxury Packaging Reveal',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790929485/Lakme_pack_update.mp4',
+        title: 'Lakmé // Pack Re-design Reveal Reel',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'social-clinique-launch-ad',
+        type: 'video',
+        accountHandle: 'clinique_in',
+        isVerified: true,
+        captionHeadline: '100H HYDRATION ACTIVATION',
+        captionSubline: 'Aloe Bio-Ferment Deep Moisture Bloom',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790929008/Clinique_Launch_Ad.mp4',
+        title: 'Clinique Moisture Surge // Launch Ad Film',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'social-novology-wishlist',
+        type: 'video',
+        accountHandle: 'Novologyofficial',
+        isVerified: true,
+        captionHeadline: 'MINI ACTIVES, MAXIMUM RESULTS',
+        captionSubline: 'Travel-Ready Actives For Glowing Barrier Health',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790928677/Novology_Mini_Wish_List.mp4',
+        title: 'Novology // Mini Wish List Holiday Reel',
+        aspectRatio: '9:16'
+      }
+    ]
+  },
+  {
+    id: 'performance',
+    title: 'PERFORMANCE',
+    bullets: [
+      'SCROLL-STOPPING HOOKS',
+      'ANGLE MAPPING',
+      'DIRECT RESPONSE COPY',
+      'CTR OPTIMIZATION',
+      'CRM COPY'
+    ],
+    media: [
+      {
+        id: 'perf-novo-pma-4',
+        type: 'video',
+        captionHeadline: 'TARGET ACNE AT THE ROOT',
+        captionSubline: 'Clinical Proof Performance Video • High-CTR Hook',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790928677/Novo_PMA_4.mp4',
+        title: 'Novology // Target Acne Root PMA Video',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'perf-lux-1',
+        type: 'video',
+        captionHeadline: 'LUXURY LATHER THAT LASTS',
+        captionSubline: 'High-ROAS Fine Fragrance Bodywash Video Hook',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790928829/Lux_1.mp4',
+        title: 'Lux // Sensorial Liquid Gold Performance Reel',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'perf-novo-birthday',
+        type: 'video',
+        captionHeadline: 'CELEBRATING PROVEN SCIENCE',
+        captionSubline: 'Direct-Response Anniversary High-Conversion Reel',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790928755/Novo_Birthday_1.mp4',
+        title: 'Novology // Anniversary Performance Campaign',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'perf-lip-glaze-ai-2',
+        type: 'video',
+        captionHeadline: 'HIGH-SHINE GLASS POUT',
+        captionSubline: 'AI Angle Mapping • 3.8x ROAS Creative Variant',
+        url: 'https://res.cloudinary.com/uybanqfq/video/upload/v1790927431/Lip_Glaze_AI_2.mp4',
+        title: 'Lakmé Lip Glaze // AI High-Conversion Video',
+        aspectRatio: '9:16'
+      },
+      {
+        id: 'perf-novo-pma-5',
+        type: 'image',
+        captionHeadline: 'FADE ACNE WITH ONE DROP',
+        captionSubline: 'Dermatologist Tested Active Barrier Performance Static',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1790730657/Novo_PMA_5.png',
+        title: 'Novology // High-ROAS Performance Static',
+        aspectRatio: '4:5'
+      }
+    ]
+  },
+  {
+    id: 'ecommerce',
+    title: 'ECOMMERCE',
+    bullets: [
+      'PDP COPY',
+      'AMAZON BANNERS',
+      'SI, A+, 70A CONTENT',
+      'NYKAA BANNERS',
+      'Q-COMM BANNERS'
+    ],
+    media: [
+      {
+        id: 'ecomm-lakme-banner-1',
+        type: 'image',
+        captionHeadline: "IT'S GOT YOU COVERED",
+        captionSubline: 'With Soft Focus Complex Technology • Active Niacinamide & Vitamin E',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1791227473/A_banner_Lakme_3.webp',
+        title: 'Lakmé Forever Matte // Amazon & Nykaa A+ Banner 01',
+        aspectRatio: '16:9'
+      },
+      {
+        id: 'ecomm-lakme-banner-2',
+        type: 'image',
+        captionHeadline: '16HR MATTE FOUNDATION',
+        captionSubline: 'Shade Matching & Formula Claims Breakdown',
+        url: 'https://res.cloudinary.com/uybanqfq/image/upload/v1791227473/Lakme_A_2.jpg',
+        title: 'Lakmé Forever Matte // Amazon & Nykaa A+ Banner 02',
+        aspectRatio: '16:9'
+      }
+    ]
   }
 ];
 

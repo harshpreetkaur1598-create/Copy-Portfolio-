@@ -18,20 +18,54 @@ export const WorkPage: React.FC<WorkPageProps> = ({
       {/* 1. Header: Exactly consistent with homepage (HOME on left, Name in center, CONTACT on right) */}
       <header
         id="top-header"
-        className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xs px-6 sm:px-12 md:px-16 lg:px-20 pt-[47px] pb-4 pl-[79px] flex items-center justify-between relative border-b border-neutral-200"
+        className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xs px-3.5 sm:px-12 md:px-16 lg:px-20 pt-3 pb-2.5 sm:pt-[47px] sm:pb-4 sm:pl-[79px] flex flex-col sm:flex-row sm:items-center sm:justify-between relative border-b border-neutral-200 transition-all"
       >
-        {/* Left: HOME link (replaces WORK) */}
+        {/* MOBILE LAYOUT (< sm): "HOME" and "CONTACT" on either side of name; Tag below both */}
+        <div className="flex flex-col items-center w-full sm:hidden">
+          <div className="flex items-center justify-between w-full">
+            <button
+              id="nav-home-btn"
+              onClick={onNavigateHome}
+              className="font-courier font-bold text-[11px] xs:text-xs tracking-[0.14em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer shrink-0"
+              aria-label="Return to home page"
+            >
+              HOME
+            </button>
+
+            <button
+              onClick={onNavigateHome}
+              className="font-anton text-[1.25rem] xs:text-[1.45rem] tracking-tight text-black hover:opacity-95 transition-opacity uppercase leading-none text-center px-1.5 whitespace-nowrap cursor-pointer"
+            >
+              HARSHPREET KAUR
+            </button>
+
+            <button
+              id="nav-contact-btn"
+              onClick={onNavigateContact}
+              className="font-courier font-bold text-[11px] xs:text-xs tracking-[0.14em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer shrink-0"
+              aria-label="Scroll to contact section"
+            >
+              CONTACT
+            </button>
+          </div>
+
+          <span className="font-courier text-[9px] xs:text-[10px] tracking-[0.18em] xs:tracking-[0.22em] text-black uppercase mt-1 font-semibold text-center whitespace-nowrap">
+            COPYWRITER <span className="mx-1 text-black font-normal">|</span> CREATIVE STRATEGIST
+          </span>
+        </div>
+
+        {/* DESKTOP & TABLET LAYOUT (sm and above): 100% UNCHANGED */}
         <button
-          id="nav-home-btn"
+          id="nav-home-btn-desktop"
           onClick={onNavigateHome}
-          className="font-courier font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer z-10"
+          className="hidden sm:block font-courier font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer z-10"
           aria-label="Return to home page"
         >
           HOME
         </button>
 
         {/* Center: Name & Subtitle - EXACT DEAD CENTER OF SCREEN */}
-        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center text-center pointer-events-auto">
+        <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 flex-col items-center text-center pointer-events-auto">
           <button
             onClick={onNavigateHome}
             className="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] tracking-tight text-black hover:opacity-95 transition-opacity uppercase leading-none -mt-[23px] h-[53px] flex items-center cursor-pointer"
@@ -45,9 +79,9 @@ export const WorkPage: React.FC<WorkPageProps> = ({
 
         {/* Right: CONTACT link */}
         <button
-          id="nav-contact-btn"
+          id="nav-contact-btn-desktop"
           onClick={onNavigateContact}
-          className="font-courier font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer z-10 pt-0"
+          className="hidden sm:block font-courier font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer z-10 pt-0"
           aria-label="Scroll to contact section"
         >
           CONTACT

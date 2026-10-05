@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroCarousel } from './components/HeroCarousel';
-import { StatsBar } from './components/StatsBar';
 import { ArchiveSection } from './components/ArchiveSection';
 import { BrandTicker } from './components/BrandTicker';
 import { ProjectsCarousel } from './components/ProjectsCarousel';
@@ -105,20 +104,14 @@ export default function App() {
       />
 
       <main className="flex-1 w-full flex flex-col">
-        {/* 2. Top 3 Services Hero Banners Carousel (Pages 1, 2, 3) */}
+        {/* 2. Top Hero Banner Carousel with Portrait and Overlaid Stats Bar */}
         <HeroCarousel
           currentSlide={currentHeroSlide}
           onSlideChange={setCurrentHeroSlide}
           onExploreWork={navigateToWork}
         />
 
-        {/* 3. Static Stats Bar with Transparent Black Background */}
-        <StatsBar
-          currentSlide={currentHeroSlide}
-          onSelectSlide={setCurrentHeroSlide}
-        />
-
-        {/* 4. Archive Section: Rolling Credits List + Dynamic Moodboard Grid (Page 4) */}
+        {/* 3. Archive Section: Revamped 3-Category Accordion */}
         <ArchiveSection onOpenWork={navigateToWork} />
 
         {/* 5. Ticker Tape of All Brand Logos (Pages 5, 6, 7, 8) */}
