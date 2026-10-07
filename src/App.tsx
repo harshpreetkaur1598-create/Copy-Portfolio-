@@ -29,6 +29,16 @@ export default function App() {
   });
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
 
+  // Guarantee page always loads at the top on initial visit or link open
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();

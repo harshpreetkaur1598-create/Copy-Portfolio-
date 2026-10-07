@@ -75,17 +75,25 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }
     }
   }, [activeSlotIndex]);
 
-  // Auto-scroll active thumbnail into view
+  // Auto-scroll active thumbnail horizontally within container only (Never scroll window)
+  const isFirstRender = useRef(true);
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     if (thumbnailContainerRef.current) {
       const activeBtn = thumbnailContainerRef.current.querySelector(
         `[data-slot-idx="${activeSlotIndex}"]`
       ) as HTMLElement | null;
       if (activeBtn) {
-        activeBtn.scrollIntoView({
+        const container = thumbnailContainerRef.current;
+        const btnLeft = activeBtn.offsetLeft;
+        const btnWidth = activeBtn.offsetWidth;
+        const targetScroll = btnLeft - container.offsetWidth / 2 + btnWidth / 2;
+        container.scrollTo({
+          left: Math.max(0, targetScroll),
           behavior: 'smooth',
-          inline: 'nearest',
-          block: 'nearest',
         });
       }
     }

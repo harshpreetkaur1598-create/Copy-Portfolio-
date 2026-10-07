@@ -18,43 +18,47 @@ export const WorkPage: React.FC<WorkPageProps> = ({
       {/* 1. Header: Exactly consistent with homepage (HOME on left, Name in center, CONTACT on right) */}
       <header
         id="top-header"
-        className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xs px-3.5 sm:px-12 md:px-16 lg:px-20 pt-3 pb-2.5 sm:pt-[47px] sm:pb-4 sm:pl-[79px] flex flex-col sm:flex-row sm:items-center sm:justify-between relative border-b border-neutral-200 transition-all"
+        className="sticky top-0 z-50 w-full bg-white px-4 sm:px-10 md:px-14 lg:px-20 pt-2.5 pb-2.5 sm:pt-4 sm:pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between relative border-b border-neutral-200 transition-all min-h-[96px] sm:min-h-[92px] md:min-h-[100px]"
       >
-        {/* MOBILE LAYOUT (< sm): "HOME" and "CONTACT" on either side of name; Tag below both */}
-        <div className="flex flex-col items-center w-full sm:hidden">
-          <div className="flex items-center justify-between w-full">
+        {/* MOBILE LAYOUT (< sm): 3-tier hierarchy exactly matching homepage in positioning and scale */}
+        <div className="flex flex-col items-center w-full sm:hidden pt-1 pb-1">
+          {/* Tier 1: Bold Centered Name */}
+          <button
+            onClick={onNavigateHome}
+            className="font-anton text-[1.85rem] xs:text-[2.2rem] tracking-tight text-black hover:opacity-95 transition-opacity uppercase leading-none text-center cursor-pointer"
+            aria-label="Return to home page"
+          >
+            HARSHPREET KAUR
+          </button>
+
+          {/* Tier 2: Subtitle strictly constrained to name's width */}
+          <span className="font-courier text-[8.5px] xs:text-[9.5px] tracking-[0.14em] xs:tracking-[0.18em] uppercase font-semibold text-center whitespace-nowrap block text-black mt-1">
+            COPYWRITER <span className="mx-0.5 text-black font-normal">|</span> CREATIVE STRATEGIST
+          </span>
+
+          {/* Tier 3: Centered Nav Buttons Row underneath */}
+          <div className="flex items-center justify-between w-full max-w-[280px] xs:max-w-[320px] mt-2 px-3">
             <button
               id="nav-home-btn"
               onClick={onNavigateHome}
-              className="font-courier font-bold text-[11px] xs:text-xs tracking-[0.14em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer shrink-0"
+              className="font-courier font-bold text-xs xs:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer"
               aria-label="Return to home page"
             >
               HOME
             </button>
 
             <button
-              onClick={onNavigateHome}
-              className="font-anton text-[1.25rem] xs:text-[1.45rem] tracking-tight text-black hover:opacity-95 transition-opacity uppercase leading-none text-center px-1.5 whitespace-nowrap cursor-pointer"
-            >
-              HARSHPREET KAUR
-            </button>
-
-            <button
               id="nav-contact-btn"
               onClick={onNavigateContact}
-              className="font-courier font-bold text-[11px] xs:text-xs tracking-[0.14em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer shrink-0"
+              className="font-courier font-bold text-xs xs:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer"
               aria-label="Scroll to contact section"
             >
               CONTACT
             </button>
           </div>
-
-          <span className="font-courier text-[9px] xs:text-[10px] tracking-[0.18em] xs:tracking-[0.22em] text-black uppercase mt-1 font-semibold text-center whitespace-nowrap">
-            COPYWRITER <span className="mx-1 text-black font-normal">|</span> CREATIVE STRATEGIST
-          </span>
         </div>
 
-        {/* DESKTOP & TABLET LAYOUT (sm and above): 100% UNCHANGED */}
+        {/* DESKTOP & TABLET LAYOUT (sm and above): WORK/HOME left, Name + Subtitle centered, CONTACT right */}
         <button
           id="nav-home-btn-desktop"
           onClick={onNavigateHome}
@@ -65,14 +69,14 @@ export const WorkPage: React.FC<WorkPageProps> = ({
         </button>
 
         {/* Center: Name & Subtitle - EXACT DEAD CENTER OF SCREEN */}
-        <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 flex-col items-center text-center pointer-events-auto">
+        <div className="hidden sm:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center pointer-events-auto">
           <button
             onClick={onNavigateHome}
-            className="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] tracking-tight text-black hover:opacity-95 transition-opacity uppercase leading-none -mt-[23px] h-[53px] flex items-center cursor-pointer"
+            className="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] tracking-tight text-black hover:opacity-95 transition-opacity uppercase leading-none cursor-pointer"
           >
             HARSHPREET KAUR
           </button>
-          <span className="font-courier text-[10px] sm:text-xs md:text-sm tracking-[0.22em] text-black uppercase mt-1.5 font-semibold pt-0 pl-0">
+          <span className="font-courier text-[10px] sm:text-xs md:text-sm tracking-[0.22em] text-black uppercase mt-1 sm:mt-1.5 font-semibold">
             COPYWRITER <span className="mx-1 text-black font-normal">|</span> CREATIVE STRATEGIST
           </span>
         </div>
@@ -81,7 +85,7 @@ export const WorkPage: React.FC<WorkPageProps> = ({
         <button
           id="nav-contact-btn-desktop"
           onClick={onNavigateContact}
-          className="hidden sm:block font-courier font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer z-10 pt-0"
+          className="hidden sm:block font-courier font-bold text-xs sm:text-sm tracking-[0.18em] uppercase text-black hover:text-[#FF0000] transition-colors py-1 cursor-pointer z-10"
           aria-label="Scroll to contact section"
         >
           CONTACT
