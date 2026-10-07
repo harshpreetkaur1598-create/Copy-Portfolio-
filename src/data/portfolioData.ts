@@ -378,17 +378,17 @@ export const BRAND_LOGOS: BrandLogo[] = [
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 1,
-    categoryTag: 'LAUNCH CAMPAIGNS: LAKMÉ',
+    categoryTag: 'PRODUCT LAUNCH',
     title: 'AHEAD OF THE EVOLUT[AI]ON',
-    description: 'Before brands trusted AI for BAU, I mastered nascent generative tools in mid-2024 and brought larger-than-life concepts to social feeds.',
+    description: "To create Rouge Bloom's surreal world without heavy CGI overhead, we got ahead of the curve, deploying nascent Gen-AI within weeks.",
     bullets: [
-      'Engineered prompts for launch assets.',
-      'Scripted Ananya Panday sustenance content.',
-      'Wrote copy for e-commerce assets.'
+      'Prompt Engineering',
+      'Influencer Scriptwriting',
+      'Copy for Social and E-commerce'
     ],
     metricHeading: 'TOP ASSET PERFORMANCE:',
     metrics: [
-      { label: 'VIEWS', value: '2.5M', isAccent: true },
+      { label: 'Views', value: '2.5M', isAccent: true },
       { label: 'ER', value: '3.89%', isAccent: true }
     ],
     wireframeLayout: 'lakme',
@@ -485,7 +485,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 2,
-    categoryTag: 'PROMO: M.A.C. COSMETICS',
+    categoryTag: 'FLASH CAMPAIGN',
     title: 'OFF-SEASON TRADE TRACTION',
     description: 'Turned an off-season slump into a revenue spike by trading generic sale callouts for gamified real-time storytelling.',
     bullets: [
@@ -535,7 +535,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 3,
-    categoryTag: 'CORNETTO X ZOMALAND',
+    categoryTag: 'FLAVOUR LAUNCH',
     title: 'MAKING OF A MASCOT',
     description: 'How do you make a newcomer stand out among OG icons? Not with flavor notes, but with character personality.',
     bullets: [
@@ -602,7 +602,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 4,
-    categoryTag: 'MARKET ENTRY: NOVOLOGY',
+    categoryTag: 'EXPERIENTIAL CAMPAIGN',
     title: 'DESIRE SYNTHESIS',
     description: 'Strong narratives can be built on minimal budgets and tight timelines too. Leveraging the creator economy turned scarcity into hype.',
     bullets: [
@@ -660,7 +660,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 5,
-    categoryTag: 'HERO MOMENT: M.A.C COSMETICS',
+    categoryTag: 'FESTIVE LAUNCH',
     title: 'NARRATIVE THREADS',
     description: 'Product, campaigns, and culture are tied together with words that define the narrative. Faced with disconnected festive films, I created an enduring naming taxonomy that moved from local launch to the permanent global brand engine.',
     bullets: [

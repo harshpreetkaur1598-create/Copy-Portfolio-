@@ -1,30 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CASE_STUDIES } from '../data/portfolioData';
-import { CaseStudy, WireframeSlot } from '../types';
-import { ChevronLeft, ChevronRight, UploadCloud, Info, Play, Pause } from 'lucide-react';
-import { LakmeShowcase } from './LakmeShowcase';
-import { MacPromoShowcase } from './MacPromoShowcase';
-import { CornettoShowcase } from './CornettoShowcase';
-import { NovologyShowcase } from './NovologyShowcase';
-import { MacThreadsShowcase } from './MacThreadsShowcase';
+import { Volume2, VolumeX } from 'lucide-react';
 
 interface ProjectsCarouselProps {
   onOpenWork: () => void;
-}
-
-function getYouTubeId(url?: string): string {
-  if (!url) return '';
-  const shortsMatch = url.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
-  if (shortsMatch && shortsMatch[1]) return shortsMatch[1];
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return match && match[2] && match[2].length === 11 ? match[2] : '';
-}
-
-function getInstagramId(url?: string): string {
-  if (!url) return '';
-  const match = url.match(/\/reel\/([a-zA-Z0-9_-]+)/);
-  return match && match[1] ? match[1] : '';
 }
 
 function isVideoUrl(url?: string): boolean {
@@ -40,34 +19,77 @@ function isVideoUrl(url?: string): boolean {
   );
 }
 
+const CASE_STUDY_METADATA: Record<number, { client: string; category: string }> = {
+  1: { client: 'Lakmé', category: 'PRODUCT LAUNCH' },
+  2: { client: 'M·A·C Cosmetics', category: 'FLASH CAMPAIGN' },
+  3: { client: 'Cornetto', category: 'FLAVOUR LAUNCH' },
+  4: { client: 'Novology', category: 'EXPERIENTIAL CAMPAIGN' },
+  5: { client: 'M·A·C Cosmetics', category: 'FESTIVE LAUNCH' },
+};
+
+const METRIC_HEADINGS: Record<number, string> = {
+  1: 'TOP ASSET PERFORMANCE:',
+  2: 'IMPACT:',
+  3: 'CAMPAIGN SCALE:',
+  4: 'OUTPUT:',
+  5: 'METRICS:',
+};
+
 export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }) => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [activeSlot, setActiveSlot] = useState<{
-    project: CaseStudy;
-    slot: WireframeSlot;
-  } | null>(null);
+  const [activeSlotIndex, setActiveSlotIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+  const [mediaProgress, setMediaProgress] = useState(0);
 
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [autoplayProgress, setAutoplayProgress] = useState(0);
-
-  // Slide transition animation state (matching HeroCarousel sliding transition)
+  // Slide transition animation state
   const [displayIndex, setDisplayIndex] = useState(currentProjectIndex);
   const [slideDirection, setSlideDirection] = useState<'next' | 'prev'>('next');
   const [slidePhase, setSlidePhase] = useState<'idle' | 'exiting' | 'entering'>('idle');
 
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const touchStartXRef = useRef<number | null>(null);
+  const thumbnailContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const project = CASE_STUDIES[displayIndex];
-
-  const handlePrev = () => {
-    setCurrentProjectIndex(
-      (prev) => (prev - 1 + CASE_STUDIES.length) % CASE_STUDIES.length
-    );
+  const project = CASE_STUDIES[displayIndex] || CASE_STUDIES[0];
+  const metadata = CASE_STUDY_METADATA[project.id] || {
+    client: 'Client',
+    category: project.categoryTag.replace(/^.*:\s*/, '') || 'PROJECT',
   };
 
-  const handleNext = () => {
-    setCurrentProjectIndex((prev) => (prev + 1) % CASE_STUDIES.length);
-  };
+  // All slots available for the case study (scrollable strip)
+  const availableSlots = project.slots && project.slots.length > 0 ? project.slots : [];
+  const activeSlot = availableSlots[activeSlotIndex] || availableSlots[0];
+
+  // When project slide changes, reset active asset to 0
+  useEffect(() => {
+    setActiveSlotIndex(0);
+    setMediaProgress(0);
+  }, [displayIndex]);
+
+  // When active slot changes, play video if video
+  useEffect(() => {
+    setMediaProgress(0);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  }, [activeSlotIndex]);
+
+  // Auto-scroll active thumbnail into view
+  useEffect(() => {
+    if (thumbnailContainerRef.current) {
+      const activeBtn = thumbnailContainerRef.current.querySelector(
+        `[data-slot-idx="${activeSlotIndex}"]`
+      ) as HTMLElement | null;
+      if (activeBtn) {
+        activeBtn.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'nearest',
+          block: 'nearest',
+        });
+      }
+    }
+  }, [activeSlotIndex]);
 
   // Handle slide transitions with visible sliding animation
   useEffect(() => {
@@ -96,18 +118,53 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }
     return () => clearTimeout(exitTimer);
   }, [currentProjectIndex, displayIndex]);
 
-  // Auto advance every 30 seconds (at least 30 seconds stay)
+  // Keyboard navigation (ArrowLeft / ArrowRight)
   useEffect(() => {
-    if (!isAutoPlaying || activeSlot !== null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        setCurrentProjectIndex((prev) => (prev - 1 + CASE_STUDIES.length) % CASE_STUDIES.length);
+      }
+      if (e.key === 'ArrowRight') {
+        setCurrentProjectIndex((prev) => (prev + 1) % CASE_STUDIES.length);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
-    const intervalTime = 100;
-    const totalDuration = 30000; // 30 seconds stay
-    const step = (intervalTime / totalDuration) * 100;
+  // Track video progress during playback
+  const handleTimeUpdate = () => {
+    if (videoRef.current && videoRef.current.duration) {
+      const prog = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      setMediaProgress(Math.min(100, Math.max(0, prog)));
+    }
+  };
+
+  // When video ends playing, automatically move to the next asset in the thumbnail row
+  const handleVideoEnded = () => {
+    setMediaProgress(0);
+    if (availableSlots.length > 1) {
+      setActiveSlotIndex((prev) => (prev + 1) % availableSlots.length);
+    }
+  };
+
+  // For static images, automatically advance to next asset after 5 seconds with animated progress
+  useEffect(() => {
+    if (!activeSlot?.url) return;
+    const isVideo = isVideoUrl(activeSlot.url) || activeSlot.type === 'video' || activeSlot.type === 'reel';
+    if (isVideo) return;
+
+    setMediaProgress(0);
+    const duration = 5000;
+    const intervalTime = 50;
+    const step = (intervalTime / duration) * 100;
 
     const timer = setInterval(() => {
-      setAutoplayProgress((prev) => {
+      setMediaProgress((prev) => {
         if (prev >= 100) {
-          handleNext();
+          if (availableSlots.length > 1) {
+            setActiveSlotIndex((curr) => (curr + 1) % availableSlots.length);
+          }
           return 0;
         }
         return prev + step;
@@ -115,23 +172,7 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, [isAutoPlaying, activeSlot, currentProjectIndex]);
-
-  // Reset autoplay progress when slide changes
-  useEffect(() => {
-    setAutoplayProgress(0);
-  }, [currentProjectIndex]);
-
-  // Keyboard navigation (ArrowLeft / ArrowRight)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeSlot !== null) return;
-      if (e.key === 'ArrowLeft') handlePrev();
-      if (e.key === 'ArrowRight') handleNext();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeSlot, currentProjectIndex]);
+  }, [activeSlot, availableSlots.length]);
 
   // Touch swipe handlers
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -142,75 +183,14 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }
     if (touchStartXRef.current === null) return;
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartXRef.current - touchEndX;
-    if (Math.abs(diff) > 40) {
+    if (Math.abs(diff) > 45) {
       if (diff > 0) {
-        handleNext();
+        setCurrentProjectIndex((prev) => (prev + 1) % CASE_STUDIES.length);
       } else {
-        handlePrev();
+        setCurrentProjectIndex((prev) => (prev - 1 + CASE_STUDIES.length) % CASE_STUDIES.length);
       }
     }
     touchStartXRef.current = null;
-  };
-
-  // Slide transition animation styles (independent, smooth horizontal slide)
-  const getSlideAnimationClass = () => {
-    if (slidePhase === 'exiting') {
-      return slideDirection === 'next'
-        ? '-translate-x-14 opacity-0 duration-220 ease-in'
-        : 'translate-x-14 opacity-0 duration-220 ease-in';
-    }
-    if (slidePhase === 'entering') {
-      return slideDirection === 'next'
-        ? 'translate-x-14 opacity-0 transition-none'
-        : '-translate-x-14 opacity-0 transition-none';
-    }
-    return 'translate-x-0 opacity-100 duration-380 ease-out';
-  };
-
-  // Helper renderer for each case study's unique wireframe layout matching PDF wireframes
-  const renderWireframeGrid = () => {
-    switch (project.wireframeLayout) {
-      case 'lakme': {
-        return (
-          <LakmeShowcase
-            onInspect={(slot) => setActiveSlot({ project, slot })}
-          />
-        );
-      }
-
-      case 'mac-promo': {
-        return (
-          <MacPromoShowcase
-            onInspect={(slot) => setActiveSlot({ project, slot })}
-          />
-        );
-      }
-
-      case 'mac-threads':
-        return (
-          <MacThreadsShowcase
-            project={project}
-            onInspect={(slot) => setActiveSlot({ project, slot })}
-          />
-        );
-
-      case 'cornetto':
-        return (
-          <CornettoShowcase
-            onInspect={(slot) => setActiveSlot({ project, slot })}
-          />
-        );
-
-      case 'novology':
-        return (
-          <NovologyShowcase
-            onInspect={(slot) => setActiveSlot({ project, slot })}
-          />
-        );
-
-      default:
-        return null;
-    }
   };
 
   // Helper to highlight [AI] in red in titles like "Ahead of the Evolut[AI]on"
@@ -235,415 +215,277 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }
     return title;
   };
 
+  // Slide transition animation styles
+  const getSlideAnimationClass = () => {
+    if (slidePhase === 'exiting') {
+      return slideDirection === 'next'
+        ? '-translate-x-12 opacity-0 duration-220 ease-in'
+        : 'translate-x-12 opacity-0 duration-220 ease-in';
+    }
+    if (slidePhase === 'entering') {
+      return slideDirection === 'next'
+        ? 'translate-x-12 opacity-0 transition-none'
+        : '-translate-x-12 opacity-0 transition-none';
+    }
+    return 'translate-x-0 opacity-100 duration-350 ease-out';
+  };
+
+  const metricHeading = METRIC_HEADINGS[project.id] || project.metricHeading || 'METRICS:';
+
   return (
     <section
       id="projects-section"
-      className="w-full bg-[#0D0D0D] text-white py-14 sm:py-20 px-4 sm:px-8 select-none relative"
-      onMouseEnter={() => setIsAutoPlaying(false)}
-      onMouseLeave={() => setIsAutoPlaying(true)}
+      className="w-full bg-black text-white py-6 sm:py-8 lg:py-10 px-4 sm:px-8 lg:px-14 select-none relative min-h-[calc(100vh-90px)] flex flex-col justify-center"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex items-center justify-between pb-4 mb-8 border-b border-neutral-800/80">
-          <div className="flex items-center gap-3">
-            <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl text-[#FF0000] tracking-tight uppercase leading-none">
-              PROJECTS
-            </h2>
-            <span className="font-courier text-[10px] text-neutral-400 uppercase tracking-widest hidden sm:inline">
-              // CASE STUDIES ARCHIVE
-            </span>
-          </div>
+      {/* Subtle Right Arrow Control (On desktop: vertically centered at side; on mobile: moved down next to dots) */}
+      <button
+        id="projects-next-btn"
+        onClick={() => setCurrentProjectIndex((prev) => (prev + 1) % CASE_STUDIES.length)}
+        className="absolute bottom-4 sm:bottom-6 md:bottom-auto md:top-1/2 right-[calc(50%-88px)] md:right-2 lg:right-4 md:-translate-y-1/2 z-40 p-2 text-white/40 hover:text-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
+        aria-label="Next case study"
+      >
+        <span className="font-courier font-bold text-2xl sm:text-3xl inline-block">›</span>
+      </button>
 
-          {/* 30-Second Autoplay Status in Header */}
-          <div className="flex items-center gap-2 bg-[#18181A] px-2.5 py-1 border border-neutral-800">
-            <span
-              className={`w-1.5 h-1.5 rounded-full ${
-                isAutoPlaying && !activeSlot ? 'bg-[#FF0000] animate-pulse' : 'bg-neutral-500'
-              }`}
-            />
-            <span className="font-courier text-[9px] uppercase tracking-wider text-neutral-300">
-              {isAutoPlaying && !activeSlot ? '30S AUTO-CYCLE' : 'PAUSED'}
-            </span>
-          </div>
-        </div>
+      {/* Subtle Left Arrow Control (On desktop: vertically centered at side; on mobile: moved down next to dots) */}
+      <button
+        id="projects-prev-btn"
+        onClick={() => setCurrentProjectIndex((prev) => (prev - 1 + CASE_STUDIES.length) % CASE_STUDIES.length)}
+        className="absolute bottom-4 sm:bottom-6 md:bottom-auto md:top-1/2 left-[calc(50%-88px)] md:left-2 lg:left-4 md:-translate-y-1/2 z-40 p-2 text-white/40 hover:text-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
+        aria-label="Previous case study"
+      >
+        <span className="font-courier font-bold text-2xl sm:text-3xl inline-block">‹</span>
+      </button>
 
-        {/* 2-Column Layout: Left Narrative & Metrics, Right Wireframe Media Grid */}
+      <div className="max-w-[1360px] mx-auto w-full">
+        {/* Main 2-Column Content: Left Copy & Narrative, Right Hero Media + Scrollable Thumbnail Strip */}
         <div
-          className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start transition-all transform will-change-transform ${getSlideAnimationClass()}`}
+          className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center transition-all transform will-change-transform ${getSlideAnimationClass()}`}
         >
-          {/* Left Column: Case Study Narrative, Bullets & Performance */}
-          <div className="lg:col-span-5 flex flex-col justify-between min-h-[420px]">
-            {(() => {
-              const isFirstSlide = displayIndex === 0;
-              const isSecondSlide = displayIndex === 1;
-              const isThirdSlide = displayIndex === 2;
-              const isFourthSlide = displayIndex === 3;
-              const isFifthSlide = displayIndex === 4;
-              const hasMetrics = Boolean(
-                project.metricHeading || (project.metrics && project.metrics.length > 0)
-              );
+          {/* Left Column: Number + Category + Client, Monospace Title, Description, Contribution, Metrics */}
+          <div className="lg:col-span-6 flex flex-col justify-center">
+            {/* Top Number + Category + Client Lockup */}
+            <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-5">
+              {/* Giant Red Number */}
+              <span className="font-anton text-6xl sm:text-7xl lg:text-[5.5rem] text-[#FF0000] leading-[0.85] tracking-normal sm:tracking-wide pr-1 shrink-0 select-none">
+                0{displayIndex + 1}
+              </span>
 
-              // Slide-specific styling
-              const categoryFontSize = isThirdSlide
-                ? '64px'
-                : isSecondSlide
-                ? '57px'
-                : isFourthSlide
-                ? '53px'
-                : isFifthSlide
-                ? '44px'
-                : '52px';
-              const bodyFontSize = '17px';
-              const metricFontSize = isFourthSlide ? '39px' : '47px';
-
-              let titleClass = 'tracking-tight leading-[0.95] uppercase mb-4 text-white ';
-              let titleStyle: React.CSSProperties | undefined;
-
-              if (isFirstSlide) {
-                titleClass += 'font-bebas text-4xl sm:text-5xl md:text-[55px]';
-                titleStyle = { fontFamily: 'Bebas Neue, sans-serif', fontSize: '55px', lineHeight: '0.95' };
-              } else if (isSecondSlide) {
-                titleClass += 'font-bebas text-4xl sm:text-5xl md:text-[59px]';
-                titleStyle = { fontFamily: 'Bebas Neue, sans-serif', fontSize: '59px', lineHeight: '0.95' };
-              } else if (isThirdSlide) {
-                titleClass += 'font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-[80px]';
-                titleStyle = { fontFamily: 'Bebas Neue, sans-serif', fontSize: '80px', lineHeight: '0.92' };
-              } else if (isFourthSlide) {
-                titleClass += 'font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-[87px]';
-                titleStyle = { fontFamily: 'Bebas Neue, sans-serif', fontSize: '87px', lineHeight: '0.92' };
-              } else if (isFifthSlide) {
-                titleClass += 'font-bebas text-5xl sm:text-6xl md:text-7xl lg:text-[82px]';
-                titleStyle = { fontFamily: 'Bebas Neue, sans-serif', fontSize: '82px', lineHeight: '0.92' };
-              } else {
-                titleClass += 'font-anton text-3xl sm:text-4xl md:text-5xl';
-              }
-
-              return (
-                <>
-                  <div style={isFifthSlide ? { fontSize: '14px' } : undefined}>
-                    {/* Category Tag (in Red Bebas Neue) */}
-                    <span
-                      className="font-bebas tracking-wide uppercase block mb-1 leading-none font-normal text-[#FF0000]"
-                      style={{
-                        fontFamily: 'Bebas Neue, sans-serif',
-                        fontSize: categoryFontSize,
-                        marginTop: isThirdSlide ? '-4px' : undefined,
-                      }}
-                    >
-                      {project.categoryTag}
-                    </span>
-
-                    {/* Title */}
-                    <h3 className={titleClass} style={titleStyle}>
-                      {renderTitle(project.title)}
-                    </h3>
-
-                    {/* Body description in Courier New */}
-                    <p
-                      className="font-courier text-neutral-300 leading-relaxed mb-6 font-medium"
-                      style={{ fontSize: bodyFontSize }}
-                    >
-                      {project.description}
-                    </p>
-
-                    {/* Bullet points */}
-                    <ul className="space-y-2 mb-8">
-                      {project.bullets.map((bullet, idx) => (
-                        <li
-                          key={idx}
-                          className="font-courier text-neutral-200 flex items-start gap-2"
-                          style={{ fontSize: bodyFontSize }}
-                        >
-                          <span
-                            className="text-[#FF0000] font-bold"
-                            style={{ fontSize: bodyFontSize }}
-                          >
-                            •
-                          </span>
-                          <span style={{ fontSize: bodyFontSize }}>
-                            {bullet}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Performance Metrics: Rendered if present, hidden completely on 5th case study */}
-                  {hasMetrics && (
-                    <div className="pt-4 border-t border-neutral-800/80">
-                      {/* Line 1: Top Asset Performance in Bebas Neue, Regular, 47px with colon - only on first case study */}
-                      {project.metricHeading && (
-                        <div className="mb-2">
-                          <span
-                            className="font-bebas text-3xl sm:text-4xl lg:text-[47px] text-white tracking-wide uppercase font-normal inline-block bg-black leading-none"
-                            style={{
-                              fontFamily: 'Bebas Neue, sans-serif',
-                              fontSize: '47px',
-                              color: '#ffffff',
-                              fontWeight: 'normal',
-                            }}
-                          >
-                            {project.metricHeading}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Line 2: Metrics in Bebas Neue, Regular */}
-                      <div className="flex flex-wrap items-baseline gap-x-6 sm:gap-x-8 gap-y-2">
-                        {project.metrics
-                          .filter((m) => m.value || m.label)
-                          .map((metric, idx) => {
-                            // If metric has no label, e.g. "15+ Assets deployed over 2hr Event Runtime"
-                            if (!metric.label && metric.value) {
-                              const match = metric.value.match(/^(\d+\+?)\s*(.*)$/);
-                              if (match) {
-                                return (
-                                  <div key={idx} className="flex items-baseline gap-2">
-                                    <span
-                                      className="font-bebas text-2xl sm:text-3xl lg:text-[47px] text-[#FF0000] tracking-wide font-normal leading-none"
-                                      style={{
-                                        fontFamily: 'Bebas Neue, sans-serif',
-                                        fontSize: metricFontSize,
-                                        color: '#FF0000',
-                                        fontWeight: 'normal',
-                                      }}
-                                    >
-                                      {match[1]}
-                                    </span>
-                                    <span
-                                      className="font-bebas text-2xl sm:text-3xl lg:text-[47px] text-white tracking-wide font-normal leading-none"
-                                      style={{
-                                        fontFamily: 'Bebas Neue, sans-serif',
-                                        fontSize: metricFontSize,
-                                        color: '#ffffff',
-                                        fontWeight: 'normal',
-                                      }}
-                                    >
-                                      {match[2]}
-                                    </span>
-                                  </div>
-                                );
-                              }
-
-                              return (
-                                <div key={idx} className="flex items-baseline gap-2">
-                                  <span
-                                    className="font-bebas text-2xl sm:text-3xl lg:text-[47px] text-white tracking-wide font-normal leading-none"
-                                    style={{
-                                      fontFamily: 'Bebas Neue, sans-serif',
-                                      fontSize: metricFontSize,
-                                      color: '#ffffff',
-                                      fontWeight: 'normal',
-                                    }}
-                                  >
-                                    {metric.value}
-                                  </span>
-                                </div>
-                              );
-                            }
-
-                            return (
-                              <div key={idx} className="flex items-baseline gap-2">
-                                <span
-                                  className="font-bebas text-2xl sm:text-3xl lg:text-[47px] text-white uppercase tracking-wide font-normal leading-none"
-                                  style={{
-                                    fontFamily: 'Bebas Neue, sans-serif',
-                                    fontSize: metricFontSize,
-                                    color: '#ffffff',
-                                    fontWeight: 'normal',
-                                  }}
-                                >
-                                  {metric.label.replace(/:$/, '')}:
-                                </span>
-                                <span
-                                  className="font-bebas text-2xl sm:text-3xl lg:text-[47px] text-[#FF0000] tracking-wide font-normal leading-none"
-                                  style={{
-                                    fontFamily: 'Bebas Neue, sans-serif',
-                                    fontSize: metricFontSize,
-                                    color: '#FF0000',
-                                    fontWeight: 'normal',
-                                  }}
-                                >
-                                  {metric.value}
-                                </span>
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </div>
-
-          {/* Right Column: Wireframe Slots Grid */}
-          <div className="lg:col-span-7 flex flex-col">
-            {/* Render the specific wireframe layout */}
-            {renderWireframeGrid()}
-          </div>
-        </div>
-
-        {/* Carousel Pagination & Navigation Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-10 pt-6 border-t border-neutral-800/80">
-          {/* Left: Progress info & status */}
-          <div className="flex items-center gap-3">
-            <span className="font-courier text-[10px] text-neutral-400 uppercase tracking-widest">
-              CASE STUDY 0{displayIndex + 1} / 0{CASE_STUDIES.length}
-            </span>
-            <div className="w-24 sm:w-32 h-1 bg-neutral-800 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#FF0000] transition-all duration-150 ease-linear"
-                style={{ width: `${autoplayProgress}%` }}
-              />
-            </div>
-            <span className="font-courier text-[9px] text-neutral-400 uppercase tracking-wider hidden md:inline">
-              {isAutoPlaying && !activeSlot ? '30S STAY' : '[PAUSED]'}
-            </span>
-          </div>
-
-          {/* Center & Right: Navigation Controls & 5 Dots */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handlePrev}
-              className="p-2 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-              aria-label="Previous case study"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            {/* 5 Dots Indicator matching PDF Pages 9, 10, 11, 12, 13 */}
-            <div className="flex items-center gap-2.5">
-              {CASE_STUDIES.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentProjectIndex(idx)}
-                  className="py-2 px-1 focus:outline-none cursor-pointer"
-                  aria-label={`Go to case study ${idx + 1}`}
+              <div className="flex flex-col justify-start pt-1">
+                {/* Category Title in Red Anton with breathable kerning */}
+                <h2
+                  className="font-anton text-2xl sm:text-3xl lg:text-[45.2px] text-[#FF0000] uppercase leading-none mb-2"
+                  style={{ letterSpacing: '0.08em' }}
                 >
-                  <div
-                    className={`transition-all duration-300 rounded-full ${
-                      currentProjectIndex === idx
-                        ? 'w-3.5 h-3.5 bg-[#FF0000]'
-                        : 'w-2 h-2 bg-neutral-600 hover:bg-neutral-400'
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
+                  {metadata.category}
+                </h2>
 
-            <button
-              onClick={handleNext}
-              className="p-2 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-              aria-label="Next case study"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Wireframe Slot Inspector Modal */}
-      {activeSlot && (
-        <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4 backdrop-blur-xs"
-          onClick={() => setActiveSlot(null)}
-        >
-          <div
-            className="bg-[#18181A] text-white max-w-md w-full p-6 shadow-2xl relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-center pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <span className="font-courier text-xs font-bold bg-[#FF0000] text-white px-2 py-0.5">
-                  SLOT {activeSlot.slot.slotNumber}
-                </span>
-                <span className="font-courier text-xs text-neutral-400 uppercase">
-                  {activeSlot.slot.dimensions}
+                {/* Client in Courier Monospace */}
+                <span className="font-courier text-xs sm:text-sm text-white tracking-[0.16em] uppercase font-medium">
+                  Client: {metadata.client}
                 </span>
               </div>
-              <button
-                onClick={() => setActiveSlot(null)}
-                className="font-courier text-neutral-400 hover:text-white p-1 text-sm font-bold cursor-pointer"
-              >
-                [ESC]
-              </button>
             </div>
 
-            <h4 className="font-anton text-2xl uppercase tracking-tight text-white mb-1">
-              {activeSlot.slot.hint}
-            </h4>
-            <p className="font-courier text-xs text-[#FF0000] font-bold uppercase mb-4">
-              {activeSlot.project.categoryTag}
+            {/* Headline in Courier New Monospace (with [AI] highlighted in red) */}
+            <h3 className="font-courier text-base sm:text-lg lg:text-[1.25rem] font-bold text-white tracking-[0.12em] uppercase mb-4 leading-snug">
+              {renderTitle(project.title)}
+            </h3>
+
+            {/* Description in Courier New Monospace (16px pure white) */}
+            <p className="font-courier text-[16px] text-white leading-relaxed mb-5 font-normal max-w-xl">
+              {project.description}
             </p>
 
-            {activeSlot.slot.url && (
-              <div className="mb-4 max-h-[340px] overflow-hidden bg-black flex items-center justify-center border border-neutral-700">
-                {isVideoUrl(activeSlot.slot.url) || activeSlot.slot.type === 'video' || activeSlot.slot.type === 'reel' ? (
-                  <video
-                    src={activeSlot.slot.url}
-                    controls
-                    autoPlay
-                    loop
-                    playsInline
-                    className="max-h-[340px] w-full object-contain"
-                  />
+            {/* Contribution Subheading & Red Square Bullets (16px / 15px pure white) */}
+            <div className="mb-5 sm:mb-6">
+              <h4 className="font-courier text-[16px] text-white uppercase tracking-[0.16em] mb-2.5 font-semibold">
+                Contribution:
+              </h4>
+              <ul className="space-y-2">
+                {project.bullets.map((bullet, idx) => (
+                  <li
+                    key={idx}
+                    className="font-courier text-[15px] text-white flex items-start gap-2.5 leading-relaxed"
+                  >
+                    <span className="w-2 h-2 bg-[#FF0000] shrink-0 mt-1.5" />
+                    <span className="text-white">{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Performance Metrics Block with Custom Headings (16px / 17px) */}
+            {project.metrics && project.metrics.length > 0 && (
+              <div>
+                <h4 className="font-courier text-[16px] text-white uppercase tracking-[0.16em] mb-2 font-semibold">
+                  {metricHeading}
+                </h4>
+                <div className="font-courier text-[16px] text-white flex flex-wrap items-center gap-x-3 gap-y-1.5 tracking-wider">
+                  {project.metrics.map((metric, idx) => (
+                    <React.Fragment key={idx}>
+                      {idx > 0 && <span className="text-white text-[17px] mx-1">|</span>}
+                      <span>
+                        {metric.label && <span className="text-white text-[16px]">{metric.label}: </span>}
+                        <span className="text-[#FF0000] text-[16px] font-bold">{metric.value}</span>
+                      </span>
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Hero Preview Box + Scrollable Thumbnail Strip */}
+          <div className="lg:col-span-6 flex flex-col items-center">
+            {/* Primary Hero Box: 1 piece of media at a time */}
+            <div className="w-full max-w-[420px] sm:max-w-[440px] h-[340px] sm:h-[390px] lg:h-[430px] bg-neutral-900/90 border border-neutral-800 shadow-2xl flex items-center justify-center overflow-hidden relative group">
+              {activeSlot?.url ? (
+                isVideoUrl(activeSlot.url) || activeSlot.type === 'video' || activeSlot.type === 'reel' ? (
+                  <>
+                    <video
+                      ref={videoRef}
+                      key={activeSlot.url}
+                      src={activeSlot.url}
+                      autoPlay
+                      muted={isMuted}
+                      playsInline
+                      onTimeUpdate={handleTimeUpdate}
+                      onEnded={handleVideoEnded}
+                      className="w-full h-full object-contain"
+                    />
+                    {/* Audio Mute/Unmute Toggle */}
+                    <button
+                      onClick={() => setIsMuted((prev) => !prev)}
+                      className="absolute bottom-3 right-3 p-1.5 bg-black/70 hover:bg-black text-white/80 hover:text-white rounded-none border border-neutral-700 transition-colors z-20 cursor-pointer"
+                      aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                    >
+                      {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                    </button>
+                  </>
                 ) : (
                   <img
-                    src={activeSlot.slot.url}
-                    alt={activeSlot.slot.hint}
-                    className="max-h-[340px] w-auto object-contain"
+                    key={activeSlot.url}
+                    src={activeSlot.url}
+                    alt={activeSlot.hint || project.title}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
                   />
+                )
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center text-neutral-500 font-courier text-xs p-4 text-center">
+                  <span className="text-neutral-400 mb-1 uppercase font-bold">[PREVIEW ASSET]</span>
+                  <span>{activeSlot?.hint || 'Media showcase preview'}</span>
+                </div>
+              )}
+
+              {/* Timeline Seeker Bar at bottom of media window */}
+              <div className="absolute bottom-0 left-0 w-full h-1 sm:h-1.5 bg-white/20 z-30 overflow-hidden pointer-events-none">
+                <div
+                  className="h-full bg-[#FF0000] transition-all duration-75 ease-linear shadow-[0_0_8px_rgba(255,0,0,0.8)]"
+                  style={{ width: `${mediaProgress}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Scrollable Thumbnail Strip */}
+            {availableSlots.length > 0 && (
+              <div className="w-full max-w-[420px] sm:max-w-[440px] mt-3 sm:mt-3.5 relative">
+                <div
+                  ref={thumbnailContainerRef}
+                  className="flex gap-2 sm:gap-2.5 overflow-x-auto pb-2 scroll-smooth select-none"
+                  style={{ scrollbarWidth: 'thin' }}
+                >
+                  {availableSlots.map((slot, idx) => {
+                    const isSelected = activeSlotIndex === idx;
+                    const isVideo = isVideoUrl(slot.url) || slot.type === 'video' || slot.type === 'reel';
+
+                    return (
+                      <button
+                        key={slot.id || idx}
+                        data-slot-idx={idx}
+                        onClick={() => setActiveSlotIndex(idx)}
+                        className={`aspect-square w-[74px] sm:w-[78px] shrink-0 bg-neutral-900 border transition-all cursor-pointer overflow-hidden relative group p-0 text-left ${
+                          isSelected
+                            ? 'border-2 border-[#FF0000] ring-1 ring-[#FF0000]/60 scale-[1.02]'
+                            : 'border-neutral-800 hover:border-neutral-500 opacity-70 hover:opacity-100'
+                        }`}
+                        aria-label={`View asset ${idx + 1}: ${slot.hint || slot.slotNumber}`}
+                      >
+                        {slot.url ? (
+                          isVideo ? (
+                            <video
+                              src={slot.url}
+                              muted
+                              playsInline
+                              preload="metadata"
+                              className="w-full h-full object-cover pointer-events-none"
+                            />
+                          ) : (
+                            <img
+                              src={slot.url}
+                              alt=""
+                              className="w-full h-full object-cover pointer-events-none"
+                              loading="lazy"
+                            />
+                          )
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-neutral-900 text-neutral-600 font-courier text-[10px]">
+                            0{idx + 1}
+                          </div>
+                        )}
+
+                        {/* Small index badge */}
+                        <span
+                          className={`absolute top-1 left-1 font-courier text-[8px] font-bold px-1 leading-none ${
+                            isSelected ? 'bg-[#FF0000] text-white' : 'bg-black/80 text-white/70'
+                          }`}
+                        >
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Subtle indicator when study has more than 5 assets */}
+                {availableSlots.length > 5 && (
+                  <div className="flex items-center justify-between text-[9px] font-courier text-neutral-400 mt-1 px-1">
+                    <span>
+                      ASSET {String(activeSlotIndex + 1).padStart(2, '0')} / {String(availableSlots.length).padStart(2, '0')}
+                    </span>
+                    <span className="text-neutral-500 uppercase tracking-widest text-[8px]">
+                      ← SCROLL TO VIEW ALL {availableSlots.length} ASSETS →
+                    </span>
+                  </div>
                 )}
               </div>
             )}
-
-            {activeSlot.slot.url ? (
-              <div className="bg-[#242426] p-3 mb-6 text-xs font-courier leading-relaxed text-neutral-300 border border-neutral-700">
-                <div className="flex items-center justify-between text-[10px] text-neutral-400 mb-1">
-                  <span className="text-[#FF0000] font-bold uppercase">LIVE CAMPAIGN ASSET</span>
-                  <span>{activeSlot.slot.dimensions}</span>
-                </div>
-                <p className="text-white font-medium">
-                  {activeSlot.slot.hint}
-                </p>
-              </div>
-            ) : (
-              <div className="bg-[#242426] p-3.5 mb-6 text-xs font-courier leading-relaxed text-neutral-300">
-                <div className="flex items-start gap-2 mb-2">
-                  <Info size={14} className="text-[#FF0000] shrink-0 mt-0.5" />
-                  <span className="text-white font-bold uppercase">
-                    HOMEPAGE TO WORK-PAGE MEDIA BINDING ARCHITECTURE:
-                  </span>
-                </div>
-                As designed, this slot will dynamically inherit high-resolution image/video assets
-                from the master “Work” dump page once uploaded. The aspect ratio is calibrated to{' '}
-                <span className="text-white font-bold">{activeSlot.slot.dimensions}</span>.
-              </div>
-            )}
-
-            <div className="flex justify-between items-center gap-3">
-              <button
-                onClick={() => setActiveSlot(null)}
-                className="px-4 py-2 font-courier text-xs uppercase bg-neutral-800 hover:bg-neutral-700 cursor-pointer"
-              >
-                CANCEL
-              </button>
-              <button
-                onClick={() => {
-                  setActiveSlot(null);
-                  onOpenWork();
-                }}
-                className="bg-[#FF0000] text-white px-5 py-2 font-courier text-xs font-bold uppercase hover:bg-white hover:text-black transition-colors cursor-pointer"
-              >
-                OPEN WORK VAULT [→]
-              </button>
-            </div>
           </div>
         </div>
-      )}
+
+        {/* Minimalist 5 Dots Pagination Centered at Bottom */}
+        <div className="flex items-center justify-center gap-2.5 pt-6 sm:pt-8">
+          {CASE_STUDIES.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentProjectIndex(idx)}
+              className="py-2 px-1 focus:outline-none cursor-pointer"
+              aria-label={`Go to case study ${idx + 1}`}
+            >
+              <div
+                className={`transition-all duration-300 rounded-full ${
+                  currentProjectIndex === idx
+                    ? 'w-3 h-3 bg-[#FF0000]'
+                    : 'w-2 h-2 bg-neutral-600 hover:bg-neutral-400'
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

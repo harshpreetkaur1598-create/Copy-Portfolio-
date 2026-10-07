@@ -11,14 +11,18 @@ import { BrandTicker } from './components/BrandTicker';
 import { ProjectsCarousel } from './components/ProjectsCarousel';
 import { ContactSection } from './components/ContactSection';
 import { WorkPage } from './components/WorkPage';
+import { AboutPage } from './components/AboutPage';
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'work'>(() => {
+  const [currentView, setCurrentView] = useState<'home' | 'work' | 'about'>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase();
       const params = new URLSearchParams(window.location.search);
       if (hash === '#work' || params.get('view') === 'work') {
         return 'work';
+      }
+      if (hash === '#about' || params.get('view') === 'about' || hash === '#sherry') {
+        return 'about';
       }
     }
     return 'home';
@@ -30,6 +34,8 @@ export default function App() {
       const hash = window.location.hash.toLowerCase();
       if (hash === '#work') {
         setCurrentView('work');
+      } else if (hash === '#about' || hash === '#sherry') {
+        setCurrentView('about');
       } else if (hash === '#home' || hash === '' || hash === '#') {
         setCurrentView('home');
       }
@@ -48,10 +54,20 @@ export default function App() {
     }
   };
 
+  const navigateToAbout = () => {
+    setCurrentView('about');
+    try {
+      window.location.hash = 'about';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+  };
+
   const navigateToHome = () => {
     setCurrentView('home');
     try {
-      if (window.location.hash === '#work') {
+      if (window.location.hash === '#work' || window.location.hash === '#about') {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -61,7 +77,7 @@ export default function App() {
   };
 
   const handleScrollToContact = () => {
-    if (currentView === 'work') {
+    if (currentView === 'work' || currentView === 'about') {
       setCurrentView('home');
       setTimeout(() => {
         try {
@@ -95,12 +111,22 @@ export default function App() {
     );
   }
 
+  if (currentView === 'about') {
+    return (
+      <AboutPage
+        onNavigateHome={navigateToHome}
+        onNavigateContact={handleScrollToContact}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white text-black font-courier selection:bg-[#FF0000] selection:text-white flex flex-col">
       {/* 1. Top Static Navigation Bar */}
       <Header
         onOpenWork={navigateToWork}
         onScrollToContact={handleScrollToContact}
+        onOpenAbout={navigateToAbout}
       />
 
       <main className="flex-1 w-full flex flex-col">
@@ -126,4 +152,3 @@ export default function App() {
     </div>
   );
 }
-

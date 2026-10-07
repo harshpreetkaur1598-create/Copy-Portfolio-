@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Sprite Graffiti';
+  src: url('./assets/fonts/SpriteGraffiti-Regular.otf') format('opentype'),
+       url('/Copy-Portfolio-/fonts/SpriteGraffiti-Regular.otf') format('opentype'),
+       url('/fonts/SpriteGraffiti-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sprite Graffiti Shadow';
+  src: url('./assets/fonts/SpriteGraffiti-Shadow.otf') format('opentype'),
+       url('/Copy-Portfolio-/fonts/SpriteGraffiti-Shadow.otf') format('opentype'),
+       url('/fonts/SpriteGraffiti-Shadow.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-sprite-graffiti {
+  font-family: 'Sprite Graffiti', cursive, sans-serif !important;
+}
+
+.font-sprite-shadow {
+  font-family: 'Sprite Graffiti Shadow', cursive, sans-serif !important;
+}
+
 @layer base {
   :root {
     --font-anton: 'Anton', sans-serif;
