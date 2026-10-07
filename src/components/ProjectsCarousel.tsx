@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CASE_STUDIES } from '../data/portfolioData';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
 
 interface ProjectsCarouselProps {
   onOpenWork: () => void;
@@ -461,6 +461,20 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ onOpenWork }
                     </span>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Fifth Case Study "Explore More Projects" CTA Button at Bottom Right Corner */}
+            {displayIndex === 4 && (
+              <div className="w-full max-w-[420px] sm:max-w-[440px] flex justify-end mt-4 sm:mt-5">
+                <button
+                  onClick={onOpenWork}
+                  className="bg-[#FF0000] text-white hover:bg-white hover:text-black font-courier font-bold text-xs sm:text-sm tracking-[0.16em] uppercase px-4 sm:px-5 py-2.5 sm:py-3 transition-all duration-200 active:scale-95 cursor-pointer flex items-center gap-2 group shadow-xl"
+                  aria-label="Explore more campaigns on the work page"
+                >
+                  <span>Explore More Projects</span>
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
               </div>
             )}
           </div>
