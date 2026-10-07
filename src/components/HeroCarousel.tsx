@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HERO_SLIDES } from '../data/portfolioData';
 
-// User-cropped Cloudinary portrait asset
-const PORTRAIT_URL = 'https://res.cloudinary.com/uybanqfq/image/upload/v1791220241/copy_of_img_0510.png';
+// User Cloudinary portrait asset (full height cutout)
+const PORTRAIT_URL = 'https://res.cloudinary.com/uybanqfq/image/upload/v1791364994/IMG_0511.png';
 
 interface HeroCarouselProps {
   onExploreWork: () => void;
@@ -222,16 +222,22 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
         </div>
       </div>
 
-      {/* 3. PHOTO LAYER (z-20): Centered, head starts cleanly under mobile headline, body extends down behind stats bar */}
+      {/* 3. PHOTO LAYER (z-20): Centered, head starts cleanly under mobile headline, body extends all the way down behind stats bar */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 top-[78px] xs:top-[84px] sm:top-[92px] md:top-0 bottom-[-24px] xs:bottom-[-28px] md:bottom-0 h-auto md:h-full w-full md:w-auto max-w-[88vw] xs:max-w-[84vw] sm:max-w-[72vw] md:max-w-[40vw] lg:max-w-[42vw] xl:max-w-[46vw] 2xl:max-w-[50vw] flex items-start justify-center z-20 pointer-events-none select-none"
+        className="absolute left-1/2 -translate-x-1/2 top-[72px] xs:top-[78px] sm:top-[86px] md:top-0 bottom-[-10px] md:bottom-0 h-[calc(100%-62px)] xs:h-[calc(100%-66px)] sm:h-[calc(100%-72px)] md:h-full w-full md:w-auto max-w-[94vw] xs:max-w-[90vw] sm:max-w-[78vw] md:max-w-[42vw] lg:max-w-[44vw] xl:max-w-[48vw] 2xl:max-w-[52vw] flex items-end justify-center z-20 pointer-events-none select-none pb-0"
       >
         <img
           src={PORTRAIT_URL}
           alt="Harshpreet Kaur"
-          className="h-full w-auto max-h-full max-w-full object-contain object-top pointer-events-none select-none"
+          className="h-full w-auto max-h-full max-w-full object-contain object-bottom pointer-events-none select-none"
           loading="eager"
           decoding="async"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            if (!target.src.includes('IMG_0511.png')) {
+              target.src = '/Copy-Portfolio-/IMG_0511.png';
+            }
+          }}
         />
       </div>
 

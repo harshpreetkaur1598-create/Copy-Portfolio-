@@ -45,22 +45,31 @@ export const ArchiveSection: React.FC<ArchiveSectionProps> = ({ onOpenWork }) =>
     setActiveCategory((prev) => (prev === catId ? null : catId));
   };
 
-  // Auto-swipe / advance media automatically every 4 seconds for active category (pauses while hovering)
+  // Auto-swipe / advance media automatically for static images (NEVER interrupt or shuffle videos)
   useEffect(() => {
     if (!activeCategory || activeCategory === 'ecommerce' || isHovered) return;
 
     const currentCatObj = ARCHIVE_ACCORDION_CATEGORIES.find((c) => c.id === activeCategory);
     if (!currentCatObj || currentCatObj.media.length <= 1) return;
 
+    const currentIdx = mediaIndices[activeCategory] || 0;
+    const currentMedia = currentCatObj.media[currentIdx];
+
+    // If the active media is a video, DO NOT auto-advance with a timer! Let the video play in full.
+    const isVideo = currentMedia?.type === 'video' || currentMedia?.url?.toLowerCase().endsWith('.mp4');
+    if (isVideo) {
+      return;
+    }
+
     const timer = setInterval(() => {
       setMediaIndices((prev) => ({
         ...prev,
         [activeCategory]: ((prev[activeCategory] || 0) + 1) % currentCatObj.media.length
       }));
-    }, 4000);
+    }, 6000);
 
     return () => clearInterval(timer);
-  }, [activeCategory, isHovered]);
+  }, [activeCategory, isHovered, mediaIndices]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
