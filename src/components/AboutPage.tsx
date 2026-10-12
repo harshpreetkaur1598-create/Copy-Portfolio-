@@ -39,13 +39,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <div className="w-full lg:w-[44%] xl:w-[45%] flex justify-center lg:justify-start shrink-0 lg:sticky lg:bottom-0 lg:self-end pb-0 order-2 lg:order-1">
           <div className="relative w-full max-w-[420px] sm:max-w-[480px] md:max-w-[540px] lg:max-w-none flex justify-center lg:justify-start">
             <img
-              src="https://res.cloudinary.com/uybanqfq/image/upload/v1791364994/IMG_0511.png"
+              src="https://res.cloudinary.com/uybanqfq/image/upload/v1791220241/copy_of_img_0510.png"
               alt="Harshpreet Kaur (Sherry)"
               className="w-full h-auto max-h-[82vh] lg:max-h-[88vh] object-contain object-bottom block select-none -mb-0.5"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (!target.src.includes('IMG_0511.png')) {
-                  target.src = '/Copy-Portfolio-/IMG_0511.png';
+                if (!target.src.includes('copy_of_img_0510.png')) {
+                  target.src = '/Copy-Portfolio-/copy_of_img_0510.png';
                 }
               }}
             />
